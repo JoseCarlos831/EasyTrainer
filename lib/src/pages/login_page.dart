@@ -37,7 +37,11 @@ class LoginPage extends StatelessWidget {
                 Text(
                   "Welcome back!\nGlad to see you, Again!",
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white, fontSize: 34, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 34,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 SizedBox(height: 30),
                 _textField("Enter your email"),
@@ -45,21 +49,38 @@ class LoginPage extends StatelessWidget {
                 _textField("Enter your password", obscure: true),
                 SizedBox(height: 20),
                 TextButton(
-  onPressed: () => Navigator.pushNamed(context, '/forgot'),
-  child: Text(
-    "Forgot Password?",
-    style: TextStyle(color: Colors.lightBlueAccent,),
-  ),
-),
-SizedBox(height: 20),
+                  onPressed: () => Navigator.pushNamed(context, '/forgot'),
+                  child: Text(
+                    "Forgot Password?",
+                    style: TextStyle(color: Colors.lightBlueAccent),
+                  ),
+                ),
+                SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // Adicione aqui qualquer lógica de validação de login antes da navegação
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      '/profile', // Rota para a tela de perfil
+                      (route) =>
+                          false, // Remove todas as rotas anteriores da pilha
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blueAccent,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                     minimumSize: Size(double.infinity, 50),
                   ),
-                  child: Text("Sign in", style: TextStyle(color: Colors.white,fontSize: 18, fontWeight: FontWeight.bold)),
+                  child: Text(
+                    "Sign in",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
                 SizedBox(height: 20),
                 Text("Or Login with", style: TextStyle(color: Colors.white70)),
@@ -69,32 +90,35 @@ SizedBox(height: 20),
                   children: [
                     SocialLoginButton(icon: Icons.facebook, color: Colors.blue),
                     SizedBox(width: 15),
-                    SocialLoginButton(icon: Icons.g_mobiledata, color: Colors.white),
+                    SocialLoginButton(
+                      icon: Icons.g_mobiledata,
+                      color: Colors.white,
+                    ),
                     SizedBox(width: 15),
                     SocialLoginButton(icon: Icons.apple, color: Colors.white),
                   ],
                 ),
                 SizedBox(height: 20),
                 Row(
-  mainAxisAlignment: MainAxisAlignment.center,
-  children: [
-    Text(
-      "Don't have an account?",
-      style: TextStyle(color: Colors.white70),
-    ),
-    TextButton(
-      onPressed: () => Navigator.pushNamed(context, '/register'),
-      child: Text(
-        "Register Now",
-        style: TextStyle(
-          color: Colors.lightBlueAccent,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
-  ],
-),
-
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Don't have an account?",
+                      style: TextStyle(color: Colors.white70),
+                    ),
+                    TextButton(
+                      onPressed:
+                          () => Navigator.pushNamed(context, '/register'),
+                      child: Text(
+                        "Register Now",
+                        style: TextStyle(
+                          color: Colors.lightBlueAccent,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -116,7 +140,8 @@ SizedBox(height: 20),
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide.none,
         ),
-        suffixIcon: obscure ? Icon(Icons.visibility, color: Colors.white70) : null,
+        suffixIcon:
+            obscure ? Icon(Icons.visibility, color: Colors.white70) : null,
       ),
     );
   }

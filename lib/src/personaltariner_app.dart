@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:personalapp/src/pages/edit_profile_page.dart';
+import 'package:personalapp/src/pages/profile_page.dart';
 import 'package:personalapp/src/pages/welcome_page.dart';
 import 'package:personalapp/src/pages/login_page.dart';
 import 'package:personalapp/src/pages/register_page.dart';
@@ -24,6 +26,9 @@ class PersonaltrainerApp extends StatelessWidget {
         '/verify':(_) => const VerifyEmailPage(),
         '/reset': (_) => const ResetPasswordPage(),
         '/success': (_) => const SuccessPage(),
+        '/profile': (_) => const ProfileScreen(),
+        '/edit-profile': (context) => const EditProfilePage(),
+      
       },
     );
   }

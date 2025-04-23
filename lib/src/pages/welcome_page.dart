@@ -30,7 +30,7 @@ class WelcomePage extends StatelessWidget {
                   Text(
                     'WELCOME TO\nEASY TRAINER',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.unbounded(
+                    style: GoogleFonts.inter(
                       color: Colors.white,
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
