@@ -8,6 +8,9 @@ import 'package:personalapp/src/pages/forgot_password_page.dart';
 import 'package:personalapp/src/pages/check_you_email.dart';
 import 'package:personalapp/src/pages/reset_password.dart';
 import 'package:personalapp/src/pages/success_page.dart';
+import 'package:personalapp/src/pages/password_settings_page.dart';
+import 'package:personalapp/src/pages/delete_account_page.dart';
+import 'package:personalapp/src/pages/settings_page.dart';
 
 class PersonaltrainerApp extends StatelessWidget {
   const PersonaltrainerApp({super.key});
@@ -27,7 +30,10 @@ class PersonaltrainerApp extends StatelessWidget {
         '/reset': (_) => const ResetPasswordPage(),
         '/success': (_) => const SuccessPage(),
         '/profile': (_) => const ProfileScreen(),
-        '/edit-profile': (context) => const EditProfilePage(),
+        '/edit-profile': (_) => const EditProfilePage(),
+        '/settings':(_) => const SettingsPage(),
+        '/password-settings': (_) => PasswordSettingsPage(),
+        '/delete-account': (_) => const DeleteAccountPage(),
       
       },
     );

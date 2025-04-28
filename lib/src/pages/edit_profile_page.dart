@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
@@ -10,19 +12,35 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> {
   final _formKey = GlobalKey<FormState>();
-  DateTime? _selectedDate;
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _weightController = TextEditingController();
   final TextEditingController _heightController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
 
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
+  DateTime? _selectedDate;
+  File? _profileImage;
+
+  @override
+  void dispose() {
+    _dateController.dispose();
+    _weightController.dispose();
+    _heightController.dispose();
+    _nameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _selectDate() async {
+    final picked = await showDatePicker(
       context: context,
       initialDate: _selectedDate ?? DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
     );
-    if (picked != null && picked != _selectedDate) {
+    if (picked != null) {
       setState(() {
         _selectedDate = picked;
         _dateController.text = DateFormat('dd/MM/yyyy').format(picked);
@@ -30,75 +48,75 @@ class _EditProfilePageState extends State<EditProfilePage> {
     }
   }
 
-  @override
-  void dispose() {
-    _dateController.dispose();
-    _weightController.dispose();
-    _heightController.dispose();
-    super.dispose();
+  Future<void> _pickImage() async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _profileImage = File(pickedFile.path);
+      });
+    }
+  }
+
+  void _submit() {
+    if (_formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Perfil Atualizado com Sucesso!')),
+      );
+      Navigator.pop(context);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        title: const Text(
-          'Profile',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/imagem/TelaLogin.png'),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(Colors.black54, BlendMode.darken),
-          ),
-        ),
+      backgroundColor: Color(0xFF0B0622),
+      body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Form(
             key: _formKey,
             child: Column(
               children: [
-                const SizedBox(height: kToolbarHeight + 40),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: IconButton(
+                    icon: Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 30),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ),
+                SizedBox(height: 10),
+
+                Text(
+                  "Editar Perfil",
+                  style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 30),
+
                 Stack(
                   alignment: Alignment.center,
                   children: [
-                    const CircleAvatar(
+                    CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.white24,
-                      backgroundImage: NetworkImage(
-                        'https://via.placeholder.com/150',
-                      ),
+
+                      backgroundImage: _profileImage != null
+                          ? FileImage(_profileImage!) as ImageProvider
+                          : NetworkImage(
+                              'https://images.unsplash.com/photo-1614283254649-bf98d3d7bb9a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8d29tYW58ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
+                            ),
                     ),
                     Positioned(
                       bottom: 0,
                       right: 0,
                       child: Container(
+                        padding: EdgeInsets.all(6),
                         decoration: BoxDecoration(
-                          color: Colors.blueAccent,
-                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.blue[900],
+                          shape: BoxShape.circle,
                         ),
                         child: IconButton(
-                          icon: const Icon(
-                            Icons.camera_alt,
-                            color: Colors.white,
-                            size: 20,
-                          ),
-                          onPressed: () => _changeProfilePhoto(),
+                          icon: const Icon(Icons.camera_alt, size: 20, color: Colors.white),
+                          onPressed: _pickImage,
                         ),
                       ),
                     ),
@@ -106,51 +124,47 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 ),
                 const SizedBox(height: 10),
                 TextButton(
-                  onPressed: () => _changeProfilePhoto(),
+                  onPressed: () => _pickImage(),
                   child: const Text(
-                    'Change profile photo',
-                    style: TextStyle(color: Colors.blueAccent, fontSize: 16),
+                    'Trocar foto de Perfil',
+                    style: TextStyle(color: Colors.blue, fontSize: 16),
                   ),
                 ),
-                const SizedBox(height: 30),
-                _buildTextFormField('Full Name'),
-                const SizedBox(height: 20),
-                _buildTextFormField(
-                  'Email',
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                const SizedBox(height: 20),
-                _buildTextFormField(
-                  'Mobile Number',
-                  keyboardType: TextInputType.phone,
-                ),
-                const SizedBox(height: 20),
+                SizedBox(height: 30),
+
+                _buildTextField("Nome Completo", controller: _nameController),
+                SizedBox(height: 20),
+                _buildTextField("Email", controller: _emailController, keyboardType: TextInputType.emailAddress),
+                SizedBox(height: 20),
+                _buildTextField("Celular", controller: _phoneController, keyboardType: TextInputType.phone),
+                SizedBox(height: 20),
                 _buildDateField(),
-                const SizedBox(height: 20),
-                _buildNumberField('Weight (kg)', _weightController),
-                const SizedBox(height: 20),
-                _buildNumberField('Height (cm)', _heightController),
-                const SizedBox(height: 40),
+                SizedBox(height: 20),
+                _buildTextField("Peso (kg)", controller: _weightController, keyboardType: TextInputType.number),
+                SizedBox(height: 20),
+                _buildTextField("Altura(cm)", controller: _heightController, keyboardType: TextInputType.number),
+                SizedBox(height: 40),
+
                 SizedBox(
                   width: double.infinity,
                   height: 50,
-                  child: ElevatedButton(
-                    onPressed: () => _submitForm(),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blueAccent,
+                  child: OutlinedButton(
+                    onPressed: _submit,
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: Colors.tealAccent),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(40),
                       ),
                     ),
-                    child: const Text(
-                      'Update Profile',
+                    child: Text(
+                      "Atualizar Perfil",
                       style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      color: Colors.tealAccent,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
+                ),
                 ),
               ],
             ),
@@ -160,95 +174,49 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  Widget _buildTextFormField(String label, {TextInputType? keyboardType}) {
+  Widget _buildTextField(
+    String label, {
+    required TextEditingController controller,
+    TextInputType? keyboardType,
+  }) {
     return TextFormField(
-      style: const TextStyle(color: Colors.white),
+      controller: controller,
+      style: TextStyle(color: Colors.white),
       keyboardType: keyboardType,
       decoration: InputDecoration(
-        labelText: label,
-        labelStyle: const TextStyle(color: Colors.white70),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.grey),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.grey),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.blueAccent),
-        ),
+        hintText: label,
+        hintStyle: TextStyle(color: Colors.white70),
         filled: true,
         fillColor: Colors.white.withOpacity(0.1),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
+        ),
       ),
+      validator: (value) => value == null || value.isEmpty ? "Please enter $label" : null,
     );
   }
+
+
 
   Widget _buildDateField() {
     return TextFormField(
       controller: _dateController,
-      style: const TextStyle(color: Colors.white),
       readOnly: true,
-      onTap: () => _selectDate(context),
+      onTap: _selectDate,
+      style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
-        labelText: 'Date of Birth',
-        labelStyle: const TextStyle(color: Colors.white70),
-        suffixIcon: const Icon(Icons.calendar_today, color: Colors.white70),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.grey),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.grey),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.blueAccent),
-        ),
+        hintText: "Data de Nacimento",
+        hintStyle: TextStyle(color: Colors.white70),
         filled: true,
         fillColor: Colors.white.withOpacity(0.1),
-      ),
-    );
-  }
-
-  Widget _buildNumberField(String label, TextEditingController controller) {
-    return TextFormField(
-      controller: controller,
-      style: const TextStyle(color: Colors.white),
-      keyboardType: TextInputType.number,
-      decoration: InputDecoration(
-        labelText: label,
-        labelStyle: const TextStyle(color: Colors.white70),
+        suffixIcon: Icon(Icons.calendar_today, color: Colors.tealAccent),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.grey),
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.grey),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.blueAccent),
-        ),
-        filled: true,
-        fillColor: Colors.white.withOpacity(0.1),
-        suffixText: label.contains('Weight') ? 'kg' : 'cm',
-        suffixStyle: const TextStyle(color: Colors.white70),
       ),
+      validator: (value) => value == null || value.isEmpty ? "Please select date of birth" : null,
     );
-  }
-
-  void _changeProfilePhoto() {
-    // Implementar lógica para trocar foto
-  }
-
-  void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      // Formulário válido - salvar dados
-      Navigator.pop(context);
-    }
   }
 }

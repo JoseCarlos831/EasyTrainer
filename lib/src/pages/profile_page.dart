@@ -6,51 +6,42 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Perfil', style: TextStyle(color: Colors.white)),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.edit, color: Colors.white),
-            onPressed: () {
-              Navigator.pushNamed(context, '/edit-profile');
-            },
-          ),
-        ],
-      ),
-      extendBodyBehindAppBar: true,
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: const AssetImage('assets/imagem/TelaLogin.png'),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-              Colors.black.withOpacity(0.5),
-              BlendMode.darken,
-            ),
-          ),
-        ),
+      backgroundColor: Color(0xFF0B0622), // Cor de fundo roxo escuro
+      body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: kToolbarHeight + 40),
+              // Botão de voltar
+              Align(
+                alignment: Alignment.centerLeft,
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 30),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ),
+              SizedBox(height: 10),
 
-              // Seção do perfil com botão de editar
+              // Título
+              Text(
+                "Perfil",
+                style: TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(height: 30),
+
+              // Foto de Perfil
               Center(
                 child: Stack(
                   children: [
-                    const CircleAvatar(
+                    CircleAvatar(
                       radius: 50,
+                      backgroundColor: Colors.white24,
                       backgroundImage: NetworkImage(
-                        'https://via.placeholder.com/150',
+                        'https://images.unsplash.com/photo-1614283254649-bf98d3d7bb9a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8d29tYW58ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
                       ),
                     ),
                     Positioned(
@@ -58,15 +49,11 @@ class ProfileScreen extends StatelessWidget {
                       right: 0,
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.blueAccent,
-                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.blue[900],
+                          shape: BoxShape.circle,
                         ),
                         child: IconButton(
-                          icon: const Icon(
-                            Icons.edit,
-                            size: 20,
-                            color: Colors.white,
-                          ),
+                          icon: Icon(Icons.edit, size: 25, color: Colors.white),
                           onPressed: () {
                             Navigator.pushNamed(context, '/edit-profile');
                           },
@@ -76,86 +63,44 @@ class ProfileScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 16),
-              const Center(
-                child: Text(
-                  'Ayomide Grace',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+              SizedBox(height: 15),
+
+              // Nome
+              Text(
+                "Ayomide Grace",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
               ),
-              const SizedBox(height: 8),
-              const Center(
-                child: Text(
-                  'ayomide.grace8885@gmail.com',
-                  style: TextStyle(fontSize: 16, color: Colors.white70),
+              SizedBox(height: 5),
+
+              // Email
+              Text(
+                "ayomide.grace589567@gmail.com",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.white70,
                 ),
               ),
+              SizedBox(height: 30),
 
-              const SizedBox(height: 32),
-              const Divider(color: Colors.white70),
-              const SizedBox(height: 16),
-
-              // Opções de menu
-              ProfileMenuItem(
-                icon: Icons.fitness_center,
-                title: 'Treino',
-                onTap: () {
-                  Navigator.pushNamed(context, '/training');
-                },
+              // Itens de Menu
+              ProfileOption(
+                icon: Icons.edit_note,
+                label: "Editar Perfil",
+                onTap: () => Navigator.pushNamed(context, '/edit-profile'),
               ),
-
-              ProfileMenuItem(
-                icon: Icons.edit,
-                title: 'Editar Perfil',
-                onTap: () {
-                  Navigator.pushNamed(context, '/edit-profile');
-                },
-              ),
-              ProfileMenuItem(
+              ProfileOption(
                 icon: Icons.settings,
-                title: 'Configurações',
-                onTap: () {
-                  Navigator.pushNamed(context, '/settings');
-                },
+                label: "Configuraçao",
+                onTap: () => Navigator.pushNamed(context, '/settings'),
               ),
-              ProfileMenuItem(
-                icon: Icons.exit_to_app,
-                title: 'Sair',
-                onTap: () async {
-                  final shouldLogout = await showDialog(
-                    context: context,
-                    builder:
-                        (context) => AlertDialog(
-                          title: const Text('Sair'),
-                          content: const Text(
-                            'Deseja realmente sair da sua conta?',
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.pop(context, false),
-                              child: const Text('Cancelar'),
-                            ),
-                            TextButton(
-                              onPressed: () => Navigator.pop(context, true),
-                              child: const Text('Sair'),
-                            ),
-                          ],
-                        ),
-                  );
-
-                  if (shouldLogout == true) {
-                    // await AuthService().logout(); // Se tiver logout
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      '/login',
-                      (route) => false,
-                    );
-                  }
-                },
+              ProfileOption(
+                icon: Icons.logout,
+                label: "Sair",
+                onTap: () => _signOut(context),
               ),
             ],
           ),
@@ -163,30 +108,71 @@ class ProfileScreen extends StatelessWidget {
       ),
     );
   }
+
+  void _signOut(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Sair'),
+        content: Text('Deseja Realmente Sair?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () {
+              // Aqui você pode adicionar lógica de logout
+              Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+            },
+            child: Text('Confirmar'),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
-class ProfileMenuItem extends StatelessWidget {
+class ProfileOption extends StatelessWidget {
   final IconData icon;
-  final String title;
+  final String label;
   final VoidCallback onTap;
 
-  const ProfileMenuItem({
+  const ProfileOption({
     super.key,
     required this.icon,
-    required this.title,
+    required this.label,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(icon, size: 28, color: Colors.white),
-      title: Text(
-        title,
-        style: const TextStyle(fontSize: 18, color: Colors.white),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 18),
+          decoration: BoxDecoration(
+            color: Color(0xFF1C1732), // tom mais claro de roxo para o container
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Row(
+            children: [
+              Icon(icon, color: Colors.tealAccent, size: 26),
+              SizedBox(width: 15),
+              Expanded(
+                child: Text(
+                  label,
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
+              ),
+              Icon(Icons.arrow_forward_ios, color: Colors.white70, size: 16),
+            ],
+          ),
+        ),
       ),
-      trailing: const Icon(Icons.chevron_right, color: Colors.white70),
-      onTap: onTap,
     );
   }
 }
