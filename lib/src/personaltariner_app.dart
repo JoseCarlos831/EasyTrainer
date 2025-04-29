@@ -11,6 +11,9 @@ import 'package:personalapp/src/pages/success_page.dart';
 import 'package:personalapp/src/pages/password_settings_page.dart';
 import 'package:personalapp/src/pages/delete_account_page.dart';
 import 'package:personalapp/src/pages/settings_page.dart';
+import 'package:personalapp/src/widgets/main_navigation.dart';
+import 'package:personalapp/src/pages/home_page.dart';
+import 'package:personalapp/src/pages/analytics_page.dart';
 
 class PersonaltrainerApp extends StatelessWidget {
   const PersonaltrainerApp({super.key});
@@ -34,6 +37,10 @@ class PersonaltrainerApp extends StatelessWidget {
         '/settings':(_) => const SettingsPage(),
         '/password-settings': (_) => PasswordSettingsPage(),
         '/delete-account': (_) => const DeleteAccountPage(),
+        '/home': (_) => const HomePage(),
+        '/a': (_) => const AnalyticsPage(),
+        '/main': (_) => const MainNavigation(),
+
       
       },
     );

@@ -98,12 +98,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.white24,
-
-                      backgroundImage: _profileImage != null
-                          ? FileImage(_profileImage!) as ImageProvider
-                          : NetworkImage(
-                              'https://images.unsplash.com/photo-1614283254649-bf98d3d7bb9a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8d29tYW58ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-                            ),
                     ),
                     Positioned(
                       bottom: 0,
@@ -111,7 +105,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       child: Container(
                         padding: EdgeInsets.all(6),
                         decoration: BoxDecoration(
-                          color: Colors.blue[900],
+                          color: Colors.teal,
                           shape: BoxShape.circle,
                         ),
                         child: IconButton(

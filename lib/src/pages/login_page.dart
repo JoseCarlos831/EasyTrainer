@@ -61,7 +61,7 @@ class LoginPage extends StatelessWidget {
                     // Adicione aqui qualquer lógica de validação de login antes da navegação
                     Navigator.pushNamedAndRemoveUntil(
                       context,
-                      '/profile', // Rota para a tela de perfil
+                      '/main', // Rota para a tela de perfil
                       (route) =>
                           false, // Remove todas as rotas anteriores da pilha
                     );

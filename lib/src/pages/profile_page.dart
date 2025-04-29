@@ -13,14 +13,6 @@ class ProfileScreen extends StatelessWidget {
           child: Column(
             children: [
               // Botão de voltar
-              Align(
-                alignment: Alignment.centerLeft,
-                child: IconButton(
-                  icon: Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 30),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ),
-              SizedBox(height: 10),
 
               // Título
               Text(
@@ -40,16 +32,13 @@ class ProfileScreen extends StatelessWidget {
                     CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.white24,
-                      backgroundImage: NetworkImage(
-                        'https://images.unsplash.com/photo-1614283254649-bf98d3d7bb9a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8d29tYW58ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
-                      ),
                     ),
                     Positioned(
                       bottom: 0,
                       right: 0,
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.blue[900],
+                          color: Colors.teal,
                           shape: BoxShape.circle,
                         ),
                         child: IconButton(
