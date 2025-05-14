@@ -1,19 +1,26 @@
+// lib/src/personaltariner_app.dart
 import 'package:flutter/material.dart';
-import 'package:personalapp/src/pages/edit_profile_page.dart';
-import 'package:personalapp/src/pages/profile_page.dart';
-import 'package:personalapp/src/pages/welcome_page.dart';
-import 'package:personalapp/src/pages/login_page.dart';
-import 'package:personalapp/src/pages/register_page.dart';
-import 'package:personalapp/src/pages/forgot_password_page.dart';
-import 'package:personalapp/src/pages/check_you_email.dart';
-import 'package:personalapp/src/pages/reset_password.dart';
-import 'package:personalapp/src/pages/success_page.dart';
-import 'package:personalapp/src/pages/password_settings_page.dart';
-import 'package:personalapp/src/pages/delete_account_page.dart';
-import 'package:personalapp/src/pages/settings_page.dart';
-import 'package:personalapp/src/widgets/main_navigation.dart';
-import 'package:personalapp/src/pages/home_page.dart';
-import 'package:personalapp/src/pages/analytics_page.dart';
+import 'package:provider/provider.dart';
+
+import 'providers/auth_provider.dart';
+
+import 'screens/analytics_page.dart';
+import 'screens/check_you_email.dart';
+import 'screens/delete_account_page.dart';
+import 'screens/edit_profile_page.dart';
+import 'screens/public/forgot_password_page.dart';
+import 'screens/private/home/home_page.dart';
+import 'screens/public/login_page.dart';
+import 'screens/password_settings_page.dart';
+import 'screens/profile_page.dart';
+import 'screens/public/register_page.dart';
+import 'screens/reset_password.dart';
+import 'screens/settings_page.dart';
+import 'screens/success_page.dart';
+import 'screens/public/welcome_page.dart';
+import 'widgets/app_initializer_widget.dart';
+import 'widgets/authguard.dart';
+import 'widgets/main_navigation.dart';
 
 class PersonaltrainerApp extends StatelessWidget {
   const PersonaltrainerApp({super.key});
@@ -23,25 +30,32 @@ class PersonaltrainerApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Easy Trainer',
-      initialRoute: '/',
+      builder: (context, child) {
+        return AppInitializer(child: child!);
+      },
+      home: Consumer<AuthProvider>(
+        builder: (context, authProvider, _) {
+          return authProvider.isAuthenticated
+              ? const MainNavigation()
+              : const WelcomePage();
+        },
+      ),
       routes: {
-        '/': (_) => const WelcomePage(),
         '/login': (_) => const LoginPage(),
         '/register': (_) => const RegisterPage(),
         '/forgot': (_) => const ForgotPasswordPage(),
-        '/verify':(_) => const VerifyEmailPage(),
+        '/verify': (_) => const VerifyEmailPage(),
         '/reset': (_) => const ResetPasswordPage(),
         '/success': (_) => const SuccessPage(),
-        '/profile': (_) => const ProfileScreen(),
-        '/edit-profile': (_) => const EditProfilePage(),
-        '/settings':(_) => const SettingsPage(),
-        '/password-settings': (_) => PasswordSettingsPage(),
-        '/delete-account': (_) => const DeleteAccountPage(),
-        '/home': (_) => const HomePage(),
-        '/a': (_) => const AnalyticsPage(),
-        '/main': (_) => const MainNavigation(),
 
-      
+        '/profile': (_) => const AuthGuard(child: ProfileScreen()),
+        '/edit-profile': (_) => const AuthGuard(child: EditProfilePage()),
+        '/settings': (_) => const AuthGuard(child: SettingsPage()),
+        '/password-settings': (_) => const AuthGuard(child: PasswordSettingsPage()),
+        '/delete-account': (_) => const AuthGuard(child: DeleteAccountPage()),
+        '/home': (_) => const AuthGuard(child: HomePage()),
+        '/a': (_) => const AuthGuard(child: AnalyticsPage()),
+        '/main': (_) => const AuthGuard(child: MainNavigation()),
       },
     );
   }

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:personalapp/src/widgets/social_login_button.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/auth_provider.dart';
+import '../../services/auth_service.dart';
+import '../../widgets/social_login_button.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -18,10 +22,29 @@ class _RegisterPageState extends State<RegisterPage> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
-  void _register() {
+  void _register() async {
     if (_formKey.currentState!.validate()) {
-      print("Usuário registrado: ${_usernameController.text}");
-      // Aqui vai a lógica de integração com backend/Firebase
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+      final userData = {
+        'name': _usernameController.text.trim(),
+        'email': _emailController.text.trim(),
+        'password': _passwordController.text,
+      };
+
+      final result = await authProvider.signup(AccountType.user, userData);
+      final success = result['success'];
+      final message = result['message'];
+
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(message)));
+
+      if (success) {
+        Navigator.pushReplacementNamed(context, '/login');
+      }
     }
   }
 
@@ -58,7 +81,11 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 10, left: 5),
                         child: IconButton(
-                          icon: Icon(Icons.arrow_back, color: Colors.white, size: 30),
+                          icon: Icon(
+                            Icons.arrow_back,
+                            color: Colors.white,
+                            size: 30,
+                          ),
                           onPressed: () => Navigator.pop(context),
                         ),
                       ),
@@ -82,13 +109,29 @@ class _RegisterPageState extends State<RegisterPage> {
                     SizedBox(height: 15),
                     _buildTextField(_emailController, "Email", email: true),
                     SizedBox(height: 15),
-                    _buildTextField(_passwordController, "Password", isPassword: true, obscure: _obscurePassword, toggle: () {
-                      setState(() => _obscurePassword = !_obscurePassword);
-                    }),
+                    _buildTextField(
+                      _passwordController,
+                      "Password",
+                      isPassword: true,
+                      obscure: _obscurePassword,
+                      toggle: () {
+                        setState(() => _obscurePassword = !_obscurePassword);
+                      },
+                    ),
                     SizedBox(height: 15),
-                    _buildTextField(_confirmPasswordController, "Confirm password", isPassword: true, obscure: _obscureConfirmPassword, toggle: () {
-                      setState(() => _obscureConfirmPassword = !_obscureConfirmPassword);
-                    }),
+                    _buildTextField(
+                      _confirmPasswordController,
+                      "Confirm password",
+                      isPassword: true,
+                      obscure: _obscureConfirmPassword,
+                      toggle: () {
+                        setState(
+                          () =>
+                              _obscureConfirmPassword =
+                                  !_obscureConfirmPassword,
+                        );
+                      },
+                    ),
                     SizedBox(height: 25),
 
                     // Botão de registro
@@ -105,7 +148,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         child: Text(
                           "Agree and Register",
-                          style: TextStyle(color: Colors.white ,fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
@@ -124,11 +171,20 @@ class _RegisterPageState extends State<RegisterPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SocialLoginButton(icon: Icons.facebook, color: Colors.blue),
+                        SocialLoginButton(
+                          icon: Icons.facebook,
+                          color: Colors.blue,
+                        ),
                         SizedBox(width: 15),
-                        SocialLoginButton(icon: Icons.g_mobiledata, color: Colors.white),
+                        SocialLoginButton(
+                          icon: Icons.g_mobiledata,
+                          color: Colors.white,
+                        ),
                         SizedBox(width: 15),
-                        SocialLoginButton(icon: Icons.apple, color: Colors.white),
+                        SocialLoginButton(
+                          icon: Icons.apple,
+                          color: Colors.white,
+                        ),
                       ],
                     ),
                   ],
@@ -163,15 +219,16 @@ class _RegisterPageState extends State<RegisterPage> {
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide.none,
         ),
-        suffixIcon: isPassword
-            ? IconButton(
-                icon: Icon(
-                  obscure ? Icons.visibility_off : Icons.visibility,
-                  color: Colors.white70,
-                ),
-                onPressed: toggle,
-              )
-            : null,
+        suffixIcon:
+            isPassword
+                ? IconButton(
+                  icon: Icon(
+                    obscure ? Icons.visibility_off : Icons.visibility,
+                    color: Colors.white70,
+                  ),
+                  onPressed: toggle,
+                )
+                : null,
       ),
       validator: (value) {
         if (value == null || value.isEmpty) return 'Enter $hint';

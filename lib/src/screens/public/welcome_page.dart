@@ -41,10 +41,7 @@ class WelcomePage extends StatelessWidget {
                   Text(
                     'Become the best version of yourself with our fitness app!',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 16,
-                    ),
+                    style: TextStyle(color: Colors.white70, fontSize: 16),
                   ),
                   SizedBox(height: 40),
                   ElevatedButton(
@@ -58,9 +55,13 @@ class WelcomePage extends StatelessWidget {
                     ),
                     child: Text(
                       'Sign in',
-                      style: TextStyle(color: Colors.white,fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

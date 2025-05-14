@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/auth_provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -29,10 +32,7 @@ class ProfileScreen extends StatelessWidget {
               Center(
                 child: Stack(
                   children: [
-                    CircleAvatar(
-                      radius: 50,
-                      backgroundColor: Colors.white24,
-                    ),
+                    CircleAvatar(radius: 50, backgroundColor: Colors.white24),
                     Positioned(
                       bottom: 0,
                       right: 0,
@@ -68,10 +68,7 @@ class ProfileScreen extends StatelessWidget {
               // Email
               Text(
                 "ayomide.grace589567@gmail.com",
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.white70,
-                ),
+                style: TextStyle(fontSize: 14, color: Colors.white70),
               ),
               SizedBox(height: 30),
 
@@ -101,23 +98,34 @@ class ProfileScreen extends StatelessWidget {
   void _signOut(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Sair'),
-        content: Text('Deseja Realmente Sair?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('Cancelar'),
+      builder:
+          (context) => AlertDialog(
+            title: Text('Sair'),
+            content: Text('Deseja Realmente Sair?'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('Cancelar'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  final authProvider = Provider.of<AuthProvider>(
+                    context,
+                    listen: false,
+                  );
+                  await authProvider.logout();
+
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    '/login',
+                    (route) => false,
+                  );
+                },
+
+                child: Text('Confirmar'),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () {
-              // Aqui você pode adicionar lógica de logout
-              Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
-            },
-            child: Text('Confirmar'),
-          ),
-        ],
-      ),
     );
   }
 }
