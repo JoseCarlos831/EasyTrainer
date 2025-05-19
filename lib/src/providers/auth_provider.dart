@@ -1,5 +1,10 @@
+// lib/src/providers/auth_provider.dart
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../models/user_model.dart';
 import '../services/auth_service.dart';
+import 'user_provider.dart';
 
 class AuthProvider with ChangeNotifier {
   final AuthService _authService = AuthService();
@@ -17,6 +22,7 @@ class AuthProvider with ChangeNotifier {
     String email,
     String password, {
     String role = 'user',
+    BuildContext? context,
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -38,6 +44,20 @@ class AuthProvider with ChangeNotifier {
         await _authService.saveUserData(user);
 
         success = true;
+
+        if (context != null) {
+          try {
+            final userProvider = Provider.of<UserProvider>(
+              context,
+              listen: false,
+            );
+            final userModel = UserModel.fromJson(user);
+            userProvider.setUser(userModel, token);
+            print('[DEBUG] UserModel injetado no UserProvider com sucesso.');
+          } catch (e) {
+            print('[ERROR] Falha ao injetar UserModel no UserProvider: $e');
+          }
+        }
       }
     }
 
@@ -101,5 +121,10 @@ class AuthProvider with ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     }
+  }
+
+  void updateUserDataLocally(Map<String, dynamic> updatedData) {
+    _userData = updatedData;
+    notifyListeners();
   }
 }

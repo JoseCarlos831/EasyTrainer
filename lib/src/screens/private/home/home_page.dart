@@ -9,7 +9,7 @@ import '../../../providers/exercise_provider.dart';
 import '../../../providers/modality_provider.dart';
 import '../../../providers/workout_provider.dart';
 
-import 'routine_section.dart';
+import 'exercise_section.dart';
 import 'workout_section.dart';
 
 class AppNotification {
@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Text(
-                  "Notificações",
+                  "Notifications",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -104,18 +104,17 @@ class _HomePageState extends State<HomePage> {
     await Future.delayed(const Duration(milliseconds: 600));
     return [
       AppNotification(
-        title: 'Treino Novo',
-        body: 'Seu treino de costas foi atualizado',
+        title: 'New Workout',
+        body: 'Your back workout was updated',
         date: DateTime.now(),
       ),
       AppNotification(
-        title: 'Meta batida!',
-        body: 'Você completou 80% dos treinos da semana.',
+        title: 'Goal Achieved!',
+        body: "You've completed 80% of your workouts this week.",
         date: DateTime.now(),
       ),
     ];
   }
-
 
   Future<void> _loadInitialData() async {
     final auth = context.read<AuthProvider>();
@@ -168,7 +167,7 @@ class _HomePageState extends State<HomePage> {
             if (snapshot.hasError) {
               return const Center(
                 child: Text(
-                  'Erro ao carregar dados. Verifique sua conexão.',
+                  'Failed to load data. Check your connection.',
                   style: TextStyle(color: Colors.redAccent),
                 ),
               );
@@ -191,7 +190,7 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(height: 20),
                   _selectedTab == 0
                       ? WorkoutSection(searchQuery: _searchQuery)
-                      : RoutineSection(searchQuery: _searchQuery),
+                      : ExerciseSection(searchQuery: _searchQuery),
                 ],
               ),
             );
@@ -203,7 +202,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildHeader() {
     final user = context.watch<AuthProvider>().userData;
-    final name = user?['name'] ?? 'Usuário';
+    final name = user?['name'] ?? 'User';
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -243,7 +242,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildDynamicTitle() {
-    final title = _selectedTab == 0 ? "My Workout" : "My Routine";
+    final title = _selectedTab == 0 ? "My Workout" : "My Exercises";
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Text(
@@ -289,14 +288,13 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-
   Widget _buildTabs() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         _tabItem(0, Icons.fitness_center, "Workout"),
         const SizedBox(width: 20),
-        _tabItem(1, Icons.event_note, "Routine"),
+        _tabItem(1, Icons.event_note, "Exercises"),
       ],
     );
   }

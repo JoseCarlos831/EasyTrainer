@@ -13,6 +13,12 @@ class WorkoutProvider with ChangeNotifier {
   List<WorkoutModel> get userWorkouts => _userWorkouts;
   bool get isLoading => _isLoading;
 
+  void clear() {
+    _userWorkouts = [];
+    _isLoading = false;
+    notifyListeners();
+  }
+
   Future<void> fetchUserWorkouts(int userId, String token) async {
     print('[WorkoutProvider] Iniciando busca de workouts...');
     _isLoading = true;

@@ -94,4 +94,37 @@ class ExerciseService {
 
     return [];
   }
+
+  Future<List<ExerciseModel>> getExercisesByModalityId(
+    int modalityId,
+    String token,
+  ) async {
+    final url = Uri.parse('$_baseUrl/Exercise/modality/$modalityId');
+    print('[ExerciseService] GET $url');
+
+    try {
+      final response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      print('[ExerciseService] Status: ${response.statusCode}');
+      print('[ExerciseService] Body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final json = jsonDecode(response.body);
+        if (json['success'] == true && json['data']?['data'] != null) {
+          final List<dynamic> items = json['data']['data'];
+          return items.map((e) => ExerciseModel.fromJson(e)).toList();
+        }
+      }
+    } catch (e) {
+      print('[ExerciseService] Erro: $e');
+    }
+
+    return [];
+  }
 }

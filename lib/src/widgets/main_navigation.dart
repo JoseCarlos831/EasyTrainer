@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:personalapp/src/screens/private/home/home_page.dart';
-import 'package:personalapp/src/screens/profile_page.dart';// substitua pelo caminho correto
-import 'package:personalapp/src/screens/analytics_page.dart';
+
+import '../screens/private/home/home_page.dart';
+import '../screens/private/analytics_page.dart';
+import '../screens/private/profile_page.dart';
+
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});
 

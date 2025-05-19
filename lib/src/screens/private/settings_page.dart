@@ -1,3 +1,5 @@
+// lib/src/screens/private/settings_page.dart
+
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -6,43 +8,47 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0B0622), // Fundo roxo escuro
+      backgroundColor: const Color(0xFF0B0622), // Dark purple background
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              // Botão de voltar
+              // Back button
               Align(
                 alignment: Alignment.centerLeft,
                 child: IconButton(
-                  icon: Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 30),
+                  icon: const Icon(
+                    Icons.arrow_back_ios_new,
+                    color: Colors.white,
+                    size: 30,
+                  ),
                   onPressed: () => Navigator.pop(context),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
 
-              // Título
-              Text(
-                "Configuração",
+              // Title
+              const Text(
+                "Settings",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 26,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
 
-              // Opções de Configuração
+              // Settings options
               SettingOption(
                 icon: Icons.lock,
-                label: "Atualizar a Senha",
+                label: "Update Password",
                 onTap: () => Navigator.pushNamed(context, '/password-settings'),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               SettingOption(
                 icon: Icons.person,
-                label: "Deletar Conta",
+                label: "Delete Account",
                 onTap: () => Navigator.pushNamed(context, '/delete-account'),
               ),
             ],
@@ -71,22 +77,26 @@ class SettingOption extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 18),
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 18),
         decoration: BoxDecoration(
-          color: Color(0xFF1C1732), // cor dos cards
+          color: const Color(0xFF1C1732), // card color
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
           children: [
             Icon(icon, color: Colors.tealAccent, size: 26),
-            SizedBox(width: 15),
+            const SizedBox(width: 15),
             Expanded(
               child: Text(
                 label,
-                style: TextStyle(color: Colors.white, fontSize: 16),
+                style: const TextStyle(color: Colors.white, fontSize: 16),
               ),
             ),
-            Icon(Icons.arrow_forward_ios, color: Colors.white70, size: 16),
+            const Icon(
+              Icons.arrow_forward_ios,
+              color: Colors.white70,
+              size: 16,
+            ),
           ],
         ),
       ),

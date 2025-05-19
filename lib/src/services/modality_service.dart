@@ -55,7 +55,7 @@ class ModalityService {
 
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
-        return ModalityModel.fromJson(json['data']['data']);
+        return ModalityModel.fromJson(json['data']);
       }
     } catch (e) {
       print('[ModalityService] Error: $e');

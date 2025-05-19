@@ -1,4 +1,5 @@
 // lib/src/services/modality_service.dart
+
 import 'package:flutter/material.dart';
 import '../models/modality_model.dart';
 
@@ -13,6 +14,12 @@ class ModalityProvider with ChangeNotifier {
   List<ModalityModel> get modalities => _modalities;
   bool get isLoading => _isLoading;
 
+  void clear() {
+    _modalities = [];
+    _isLoading = false;
+    notifyListeners();
+  }
+
   Future<void> fetchModalities(String token) async {
     _isLoading = true;
     notifyListeners();
@@ -21,6 +28,24 @@ class ModalityProvider with ChangeNotifier {
     print('[ModalityProvider] Modalities loaded: ${_modalities.length}');
 
     _isLoading = false;
+    notifyListeners();
+  }
+
+  Future<void> fetchMissingModalities(
+    List<int> modalityIds,
+    String token,
+  ) async {
+    final missingIds = modalityIds.where(
+      (id) => !_modalities.any((m) => m.id == id),
+    );
+
+    for (final id in missingIds) {
+      final modality = await _modalityService.fetchById(id, token);
+      if (modality != null) {
+        _modalities.add(modality);
+      }
+    }
+
     notifyListeners();
   }
 }

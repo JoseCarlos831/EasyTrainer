@@ -5,7 +5,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../models/workout_model.dart';
 import '../../../providers/workout_provider.dart';
+import '../details/workout_detail_page.dart';
 
 class WorkoutSection extends StatelessWidget {
   final String searchQuery;
@@ -29,12 +31,19 @@ class WorkoutSection extends StatelessWidget {
       return const Center(child: CircularProgressIndicator());
     }
 
-    if (workouts.isEmpty) {
+    final filteredWorkouts =
+        workouts
+            .where(
+              (w) => w.name.toLowerCase().contains(searchQuery.toLowerCase()),
+            )
+            .toList();
+
+    if (filteredWorkouts.isEmpty) {
       return const Padding(
         padding: EdgeInsets.symmetric(vertical: 24),
         child: Center(
           child: Text(
-            "Nenhum workout encontrado.",
+            "No workouts found.",
             style: TextStyle(
               color: Colors.white70,
               fontSize: 16,
@@ -48,11 +57,13 @@ class WorkoutSection extends StatelessWidget {
 
     return Column(
       children:
-          workouts.map((workout) {
+          filteredWorkouts.map((workout) {
             return _workoutCard(
+              context: context,
+              workout: workout,
               title: workout.name,
               subtitle: workout.description,
-              progress: 0.0, // Progresso mockado por enquanto
+              progress: 0.0,
             );
           }).toList(),
     );
@@ -62,63 +73,80 @@ class WorkoutSection extends StatelessWidget {
     required String title,
     required String subtitle,
     required double progress,
+    required BuildContext context,
+    required WorkoutModel workout,
   }) {
     final random = Random();
     final imagePath = _workoutImages[random.nextInt(_workoutImages.length)];
 
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(imagePath),
-          fit: BoxFit.cover,
-          colorFilter: ColorFilter.mode(
-            Colors.black.withOpacity(0.4),
-            BlendMode.darken,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => WorkoutDetailPage(workout: workout),
           ),
-        ),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(subtitle, style: const TextStyle(color: Colors.white70)),
-                  const SizedBox(height: 12),
-                  Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      const SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: CircularProgressIndicator(
-                          value: 0.0,
-                          backgroundColor: Colors.white24,
-                          valueColor: AlwaysStoppedAnimation(Colors.tealAccent),
-                          strokeWidth: 4,
-                        ),
-                      ),
-                      const Text('0%', style: TextStyle(color: Colors.white)),
-                    ],
-                  ),
-                ],
-              ),
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 16),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(imagePath),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.4),
+              BlendMode.darken,
             ),
-          ],
+          ),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      subtitle,
+                      style: const TextStyle(color: Colors.white70),
+                    ),
+                    const SizedBox(height: 12),
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        const SizedBox(
+                          width: 40,
+                          height: 40,
+                          child: CircularProgressIndicator(
+                            value: 0.0,
+                            backgroundColor: Colors.white24,
+                            valueColor: AlwaysStoppedAnimation(
+                              Colors.tealAccent,
+                            ),
+                            strokeWidth: 4,
+                          ),
+                        ),
+                        const Text('0%', style: TextStyle(color: Colors.white)),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

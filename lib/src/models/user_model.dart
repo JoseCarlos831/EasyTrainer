@@ -1,3 +1,5 @@
+// lib/src/models/user_model.dart
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user_model.g.dart';
@@ -31,6 +33,31 @@ class UserModel {
     required this.goalIds,
     required this.instructorIds,
   });
+
+  UserModel copyWith({
+    String? name,
+    String? email,
+    String? mobileNumber,
+    DateTime? birthday,
+    double? weight,
+    double? height,
+    String? gender,
+  }) {
+    return UserModel(
+      id: id,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      mobileNumber: mobileNumber ?? this.mobileNumber,
+      birthday: birthday ?? this.birthday,
+      age: age,
+      weight: weight ?? this.weight,
+      height: height ?? this.height,
+      gender: gender ?? this.gender,
+      levelId: levelId,
+      goalIds: goalIds,
+      instructorIds: instructorIds,
+    );
+  }
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModelFromJson(json);

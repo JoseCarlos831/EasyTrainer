@@ -1,22 +1,23 @@
 // lib/src/personaltariner_app.dart
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/auth_provider.dart';
 
-import 'screens/analytics_page.dart';
-import 'screens/check_you_email.dart';
-import 'screens/delete_account_page.dart';
-import 'screens/edit_profile_page.dart';
+import 'screens/private/analytics_page.dart';
+import 'screens/public/check_you_email.dart';
+import 'screens/private/delete_account_page.dart';
+import 'screens/private/edit_profile_page.dart';
 import 'screens/public/forgot_password_page.dart';
 import 'screens/private/home/home_page.dart';
 import 'screens/public/login_page.dart';
-import 'screens/password_settings_page.dart';
-import 'screens/profile_page.dart';
+import 'screens/private/password_settings_page.dart';
+import 'screens/private/profile_page.dart';
 import 'screens/public/register_page.dart';
-import 'screens/reset_password.dart';
-import 'screens/settings_page.dart';
-import 'screens/success_page.dart';
+import 'screens/private/reset_password.dart';
+import 'screens/private/settings_page.dart';
+import 'screens/public/success_page.dart';
 import 'screens/public/welcome_page.dart';
 import 'widgets/app_initializer_widget.dart';
 import 'widgets/authguard.dart';

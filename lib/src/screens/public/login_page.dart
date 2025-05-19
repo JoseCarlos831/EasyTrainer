@@ -1,10 +1,12 @@
 // lib/src/screens/public/login_page.dart
+
 import 'package:flutter/material.dart';
 import 'package:personalapp/src/widgets/social_login_button.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 
 import '../../providers/auth_provider.dart';
+import '../../widgets/password_text_field.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -47,15 +49,21 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(height: 20),
                     _welcomeText(),
                     const SizedBox(height: 30),
+
                     _textField(
                       "Enter your email",
                       controller: _emailController,
                     ),
                     const SizedBox(height: 20),
-                    _textField(
-                      "Enter your password",
-                      obscure: true,
+                    PasswordTextField(
+                      hintText: "Enter your password",
                       controller: _passwordController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your password';
+                        }
+                        return null;
+                      },
                     ),
                     const SizedBox(height: 20),
                     _forgotPasswordLink(),
@@ -181,6 +189,7 @@ class _LoginPageState extends State<LoginPage> {
           _emailController.text.trim(),
           _passwordController.text,
           role: 'user',
+          context: context,
         );
 
         if (!mounted) return;
@@ -190,7 +199,7 @@ class _LoginPageState extends State<LoginPage> {
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Login falhou. Verifique suas credenciais.'),
+              content: Text('Invalid email or password. Please try again.'),
             ),
           );
         }
