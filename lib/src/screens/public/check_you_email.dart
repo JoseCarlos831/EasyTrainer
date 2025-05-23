@@ -1,4 +1,7 @@
+// lib/src/screens/public/check_you_email.dart
+
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class VerifyEmailPage extends StatefulWidget {
   const VerifyEmailPage({super.key});
@@ -9,7 +12,10 @@ class VerifyEmailPage extends StatefulWidget {
 
 class _VerifyEmailPageState extends State<VerifyEmailPage> {
   final List<FocusNode> _focusNodes = List.generate(4, (_) => FocusNode());
-  final List<TextEditingController> _controllers = List.generate(4, (_) => TextEditingController());
+  final List<TextEditingController> _controllers = List.generate(
+    4,
+    (_) => TextEditingController(),
+  );
 
   void _nextField(String value, int index) {
     if (value.isNotEmpty && index < 3) {
@@ -41,14 +47,15 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
+
     return Scaffold(
       body: Stack(
         children: [
-          // Fundo com imagem desfocada
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/imagem/TelaLogin.png'),
+                image: const AssetImage('assets/imagem/TelaLogin.png'),
                 fit: BoxFit.cover,
                 colorFilter: ColorFilter.mode(
                   Colors.black.withOpacity(0.5),
@@ -57,37 +64,37 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
               ),
             ),
           ),
-
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ListView(
                 children: [
-                  // Botão de voltar
                   Align(
                     alignment: Alignment.centerLeft,
                     child: IconButton(
-                      icon: Icon(Icons.arrow_back, color: Colors.white, size: 30),
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                        size: 30,
+                      ),
                       onPressed: () => Navigator.pop(context),
                     ),
                   ),
-                  SizedBox(height: 30),
-
-                  // Título
+                  const SizedBox(height: 30),
                   Text(
-                    "Check your Email",
-                    style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+                    local.verifyEmailPage_title,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  SizedBox(height: 10),
-
-                  // Subtexto
+                  const SizedBox(height: 10),
                   Text(
-                    "Enter the verification code we just sent on your email address.",
-                    style: TextStyle(color: Colors.white70),
+                    local.verifyEmailPage_instruction,
+                    style: const TextStyle(color: Colors.white70),
                   ),
-                  SizedBox(height: 30),
-
-                  // Campos de código
+                  const SizedBox(height: 30),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: List.generate(4, (index) {
@@ -98,7 +105,10 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                           focusNode: _focusNodes[index],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 24, color: Colors.white),
+                          style: const TextStyle(
+                            fontSize: 24,
+                            color: Colors.white,
+                          ),
                           maxLength: 1,
                           decoration: InputDecoration(
                             counterText: "",
@@ -114,9 +124,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                       );
                     }),
                   ),
-                  SizedBox(height: 40),
-
-                  // Botão de continuar
+                  const SizedBox(height: 40),
                   SizedBox(
                     width: double.infinity,
                     height: 50,
@@ -124,25 +132,32 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                       onPressed: _verifyCode,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blueAccent,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
                       ),
-                      child: Text("Continue", style: TextStyle(color: Colors.white,fontSize: 16, fontWeight: FontWeight.bold)),
+                      child: Text(
+                        local.verifyEmailPage_continueButton,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
-                  SizedBox(height: 20),
-
-                  // Link para reenviar
+                  const SizedBox(height: 20),
                   Center(
                     child: GestureDetector(
                       onTap: _resendCode,
                       child: Text.rich(
                         TextSpan(
-                          text: "Didn't receive code? ",
-                          style: TextStyle(color: Colors.white70),
+                          text: local.verifyEmailPage_resendPrompt + " ",
+                          style: const TextStyle(color: Colors.white70),
                           children: [
                             TextSpan(
-                              text: "Resend",
-                              style: TextStyle(
+                              text: local.verifyEmailPage_resendLink,
+                              style: const TextStyle(
                                 color: Colors.lightBlueAccent,
                                 fontWeight: FontWeight.bold,
                               ),

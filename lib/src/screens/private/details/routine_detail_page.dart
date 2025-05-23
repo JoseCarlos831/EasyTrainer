@@ -2,6 +2,7 @@
 
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../../models/routine_model.dart';
@@ -49,6 +50,7 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
     final exercises = context.watch<ExerciseProvider>().getExercisesForRoutine(
       widget.routine.id,
     );
@@ -77,22 +79,27 @@ class _RoutineDetailPageState extends State<RoutineDetailPage> {
             const SizedBox(height: 20),
             _infoTile(
               Icons.schedule,
-              "Duration",
+              local.routineDetail_durationLabel,
               _formatDuration(totalDuration),
             ),
             _infoTile(
               Icons.local_fire_department,
-              "Calories",
-              "${totalCalories.toStringAsFixed(0)} kcal",
+              local.routineDetail_caloriesLabel,
+              local.routineDetail_caloriesValue(
+                totalCalories.toStringAsFixed(0),
+              ),
             ),
             if (widget.routine.description != null)
-              _section("Description", widget.routine.description),
+              _section(
+                local.routineDetail_descriptionTitle,
+                widget.routine.description,
+              ),
             const SizedBox(height: 16),
-            _section("Exercises", null),
+            _section(local.routineDetail_exerciseTitle, null),
             if (exercises.isEmpty)
-              const Text(
-                "No exercises found.",
-                style: TextStyle(color: Colors.white70),
+              Text(
+                local.routineDetail_noExercises,
+                style: const TextStyle(color: Colors.white70),
               )
             else
               ...exercises.map(_exerciseCard),

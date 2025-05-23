@@ -1,10 +1,9 @@
 // lib/src/providers/auth_provider.dart
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../models/user_model.dart';
+
 import '../services/auth_service.dart';
-import 'user_provider.dart';
+import '../easytrainer_app.dart';
 
 class AuthProvider with ChangeNotifier {
   final AuthService _authService = AuthService();
@@ -22,54 +21,38 @@ class AuthProvider with ChangeNotifier {
     String email,
     String password, {
     String role = 'user',
-    BuildContext? context,
   }) async {
     _isLoading = true;
     notifyListeners();
 
-    final responseJson = await _authService.login(email, password, role);
-
     bool success = false;
 
-    if (responseJson != null && responseJson['success'] == true) {
-      final data = responseJson['data'];
-      final token = data?['token'];
-      final user = data?['user'];
+    try {
+      final responseJson = await _authService.login(email, password, role);
 
-      if (token != null && user != null) {
-        _token = token;
-        _userData = user;
+      if (responseJson != null && responseJson['success'] == true) {
+        final data = responseJson['data'];
+        final token = data?['token'];
+        final user = data?['user'];
 
-        await _authService.saveToken(token);
-        await _authService.saveUserData(user);
+        if (token != null && user != null) {
+          _token = token;
+          _userData = user;
 
-        success = true;
+          await _authService.saveToken(token);
+          await _authService.saveUserData(user);
 
-        if (context != null) {
-          try {
-            final userProvider = Provider.of<UserProvider>(
-              context,
-              listen: false,
-            );
-            final userModel = UserModel.fromJson(user);
-            userProvider.setUser(userModel, token);
-            print('[DEBUG] UserModel injetado no UserProvider com sucesso.');
-          } catch (e) {
-            print('[ERROR] Falha ao injetar UserModel no UserProvider: $e');
-          }
+          success = true;
         }
       }
+    } catch (e) {
+      print('[ERROR] Erro durante login: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
 
-    _isLoading = false;
-    notifyListeners();
-
     return success;
-  }
-
-  Future<void> loadUserData() async {
-    _userData = await _authService.getUserData();
-    notifyListeners();
   }
 
   Future<Map<String, dynamic>> signup(
@@ -79,30 +62,55 @@ class AuthProvider with ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
-    final result = await _authService.signup(type, userData);
+    late final Map<String, dynamic> result;
 
-    _isLoading = false;
-    notifyListeners();
+    try {
+      result = await _authService.signup(type, userData);
+
+      if (result['success'] == true) {
+        // Após cadastro com sucesso, navega para login
+        navigatorKey.currentState?.pushNamedAndRemoveUntil(
+          '/login',
+          (route) => false,
+        );
+      }
+    } catch (e) {
+      print('[ERROR] Erro durante signup: $e');
+      result = {'success': false, 'message': 'Erro durante cadastro'};
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
 
     return result;
   }
 
   Future<void> logout() async {
-    await _authService.logout();
-    _token = null;
-    _userData = null;
-    notifyListeners();
+    try {
+      await _authService.logout();
+    } catch (e) {
+      print('[ERROR] Erro ao fazer logout: $e');
+    } finally {
+      _token = null;
+      _userData = null;
+      Future.microtask(() => notifyListeners());
+
+      // Redireciona para a tela de inicialização (limpa a árvore)
+      navigatorKey.currentState?.pushNamedAndRemoveUntil(
+        '/initializing',
+        (r) => false,
+      );
+    }
   }
 
-  Future<void> tryAutoLogin() async {
+  Future<void> tryAutoLogin(BuildContext context) async {
     _isLoading = true;
-    notifyListeners();
+    Future.microtask(() => notifyListeners());
 
     try {
       final token = await _authService.getToken();
-      if (token == null || token.isEmpty) {
-        _token = null;
-      } else {
+
+      if (token != null && token.isNotEmpty) {
         final isValid = await _authService.validateToken(token);
         if (isValid) {
           _token = token;
@@ -112,19 +120,22 @@ class AuthProvider with ChangeNotifier {
           _token = null;
           _userData = null;
         }
+      } else {
+        _token = null;
+        _userData = null;
       }
     } catch (e) {
-      print('Erro durante auto login: $e');
+      print('[ERROR] Erro durante auto login: $e');
       _token = null;
       _userData = null;
     } finally {
       _isLoading = false;
-      notifyListeners();
+      Future.microtask(() => notifyListeners());
     }
   }
 
   void updateUserDataLocally(Map<String, dynamic> updatedData) {
     _userData = updatedData;
-    notifyListeners();
+    Future.microtask(() => notifyListeners());
   }
 }

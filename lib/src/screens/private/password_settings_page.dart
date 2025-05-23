@@ -1,6 +1,7 @@
 // lib/src/screens/private/password_settings_page.dart
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/user_provider.dart';
@@ -29,12 +30,16 @@ class _PasswordSettingsPageState extends State<PasswordSettingsPage> {
   }
 
   void _changePassword() async {
+    final local = AppLocalizations.of(context)!;
+
     if (_newPasswordController.text != _confirmPasswordController.text) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("New passwords do not match")),
+        SnackBar(content: Text(local.passwordSettingsPage_mismatchError)),
       );
       return;
     }
+
+    setState(() => _isLoading = true);
 
     final userProvider = context.read<UserProvider>();
     final success = await userProvider.changePassword(
@@ -43,21 +48,24 @@ class _PasswordSettingsPageState extends State<PasswordSettingsPage> {
     );
 
     if (!mounted) return;
+    setState(() => _isLoading = false);
 
     if (success) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Password changed successfully!")),
+        SnackBar(content: Text(local.passwordSettingsPage_successMessage)),
       );
       Navigator.pop(context);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Failed to change password.")),
+        SnackBar(content: Text(local.passwordSettingsPage_errorMessage)),
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: const Color(0xFF0B0622),
       body: SafeArea(
@@ -77,9 +85,9 @@ class _PasswordSettingsPageState extends State<PasswordSettingsPage> {
                 ),
               ),
               const SizedBox(height: 10),
-              const Text(
-                "Update Password",
-                style: TextStyle(
+              Text(
+                local.passwordSettingsPage_title,
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 26,
                   fontWeight: FontWeight.bold,
@@ -88,33 +96,31 @@ class _PasswordSettingsPageState extends State<PasswordSettingsPage> {
               const SizedBox(height: 30),
 
               PasswordTextField(
-                hintText: "Current Password",
+                hintText: local.passwordSettingsPage_currentPassword,
                 controller: _currentPasswordController,
               ),
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   onPressed: () => Navigator.pushNamed(context, '/forgot'),
-                  child: const Text(
-                    "Forgot your password?",
-                    style: TextStyle(color: Colors.lightBlueAccent),
+                  child: Text(
+                    local.passwordSettingsPage_forgotPasswordLink,
+                    style: const TextStyle(color: Colors.lightBlueAccent),
                   ),
                 ),
               ),
               const SizedBox(height: 10),
 
               PasswordTextField(
-                hintText: "New Password",
+                hintText: local.passwordSettingsPage_newPassword,
                 controller: _newPasswordController,
               ),
               const SizedBox(height: 20),
 
               PasswordTextField(
-                hintText: "Confirm New Password",
+                hintText: local.passwordSettingsPage_confirmNewPassword,
                 controller: _confirmPasswordController,
               ),
-
-              const SizedBox(height: 20),
 
               const SizedBox(height: 40),
 
@@ -134,9 +140,9 @@ class _PasswordSettingsPageState extends State<PasswordSettingsPage> {
                           ? const CircularProgressIndicator(
                             color: Colors.tealAccent,
                           )
-                          : const Text(
-                            "Update Password",
-                            style: TextStyle(
+                          : Text(
+                            local.passwordSettingsPage_updateButton,
+                            style: const TextStyle(
                               color: Colors.tealAccent,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,

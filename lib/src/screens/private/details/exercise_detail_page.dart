@@ -2,6 +2,7 @@
 
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../models/exercise_model.dart';
 
@@ -12,6 +13,7 @@ class ExerciseDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
     final imagePath = _randomImage();
 
     return Scaffold(
@@ -20,7 +22,10 @@ class ExerciseDetailPage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: const BackButton(color: Colors.white),
-        title: const Text("Exercise", style: TextStyle(color: Colors.white)),
+        title: Text(
+          local.exerciseDetail_pageTitle,
+          style: const TextStyle(color: Colors.white),
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -38,20 +43,44 @@ class ExerciseDetailPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            _infoRow("Duration", _formatDuration(exercise.duration)),
             _infoRow(
-              "Calories",
+              local.exerciseDetail_labelDuration,
+              _formatDuration(exercise.duration),
+            ),
+            _infoRow(
+              local.exerciseDetail_labelCalories,
               "${exercise.caloriesBurnedEstimate?.toStringAsFixed(0) ?? '--'} kcal",
             ),
-            _infoRow("Equipment", exercise.equipment ?? "None"),
-            _infoRow("Body part", exercise.bodyPart ?? "Not specified"),
+            _infoRow(
+              local.exerciseDetail_labelEquipment,
+              exercise.equipment ?? local.exerciseDetail_equipmentNone,
+            ),
+            _infoRow(
+              local.exerciseDetail_labelBodyPart,
+              exercise.bodyPart ?? local.exerciseDetail_bodyPartNotSpecified,
+            ),
             const SizedBox(height: 20),
-            _section("Description", exercise.description),
-            _section("Steps", exercise.steps),
-            _section("Indicated for", exercise.indicatedFor),
-            _section("Safety tips", exercise.safetyTips),
-            _section("Common mistakes", exercise.commonMistakes),
-            _section("Contraindications", exercise.contraindications),
+            _section(
+              local.exerciseDetail_sectionDescription,
+              exercise.description,
+            ),
+            _section(local.exerciseDetail_sectionSteps, exercise.steps),
+            _section(
+              local.exerciseDetail_sectionIndicatedFor,
+              exercise.indicatedFor,
+            ),
+            _section(
+              local.exerciseDetail_sectionSafetyTips,
+              exercise.safetyTips,
+            ),
+            _section(
+              local.exerciseDetail_sectionMistakes,
+              exercise.commonMistakes,
+            ),
+            _section(
+              local.exerciseDetail_sectionContraindications,
+              exercise.contraindications,
+            ),
           ],
         ),
       ),
@@ -70,7 +99,7 @@ class ExerciseDetailPage extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 4),
       child: Row(
         children: [
-          Icon(Icons.fitness_center, color: Colors.tealAccent, size: 18),
+          const Icon(Icons.fitness_center, color: Colors.tealAccent, size: 18),
           const SizedBox(width: 8),
           Text("$label: ", style: const TextStyle(color: Colors.white70)),
           Text(value, style: const TextStyle(color: Colors.white)),

@@ -20,14 +20,22 @@ class WorkoutProvider with ChangeNotifier {
   }
 
   Future<void> fetchUserWorkouts(int userId, String token) async {
-    print('[WorkoutProvider] Iniciando busca de workouts...');
+    if (_isLoading) return;
+
     _isLoading = true;
-    notifyListeners();
 
-    _userWorkouts = await _workoutService.getWorkoutsByUserId(userId, token);
+    Future.microtask(() => notifyListeners());
 
-    print('[WorkoutProvider] Workouts carregados: ${_userWorkouts.length}');
-    _isLoading = false;
-    notifyListeners();
+    try {
+      final workouts = await _workoutService.getWorkoutsByUserId(userId, token);
+      _userWorkouts = workouts;
+      print('[WorkoutProvider] Workouts carregados: ${_userWorkouts.length}');
+    } catch (e) {
+      print('[WorkoutProvider] Erro ao carregar workouts: $e');
+      _userWorkouts = [];
+    } finally {
+      _isLoading = false;
+      Future.microtask(() => notifyListeners());
+    }
   }
 }

@@ -3,6 +3,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../models/workout_model.dart';
 import '../../../models/exercise_model.dart';
@@ -70,6 +71,7 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
     final exerciseProvider = context.watch<ExerciseProvider>();
     final routineProvider = context.watch<RoutineProvider>();
 
@@ -102,7 +104,7 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
           children: [
             _imageHeader(),
             const SizedBox(height: 20),
-            _sectionTitle("Description"),
+            _sectionTitle(local.workoutDetail_descriptionSectionTitle),
             Text(
               widget.workout.description,
               style: const TextStyle(color: Colors.white70),
@@ -110,27 +112,27 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
             const SizedBox(height: 16),
             _infoTile(
               Icons.schedule,
-              "Duration",
+              local.workoutDetail_durationLabel,
               _formatDuration(totalDuration),
             ),
             _infoTile(
               Icons.local_fire_department,
-              "Calories",
+              local.workoutDetail_caloriesLabel,
               "${totalCalories.toStringAsFixed(0)} kcal",
             ),
             _infoTile(
               Icons.calendar_today,
-              "Workout days",
+              local.workoutDetail_daysLabel,
               widget.workout.numberOfDays.toString(),
             ),
             const SizedBox(height: 16),
             if (exercises.isNotEmpty) ...[
-              _sectionTitle("Direct exercises"),
+              _sectionTitle(local.workoutDetail_directExercisesTitle),
               ...exercises.map(_exerciseCard),
               const SizedBox(height: 16),
             ],
             if (routines.isNotEmpty) ...[
-              _sectionTitle("Routines"),
+              _sectionTitle(local.workoutDetail_routinesTitle),
               ...routines.map((r) => _routineCard(r, exerciseProvider)),
             ],
           ],
@@ -217,6 +219,7 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
   }
 
   Widget _routineCard(RoutineModel routine, ExerciseProvider exerciseProvider) {
+    final local = AppLocalizations.of(context)!;
     final rExercises = exerciseProvider.getExercisesForRoutine(routine.id);
     final preview = rExercises.take(3).map((e) => e.name).join(', ');
     final calories = rExercises.fold(
@@ -277,19 +280,23 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                 Padding(
                   padding: const EdgeInsets.only(top: 4),
                   child: Text(
-                    "Exercises: $preview",
+                    local.workoutDetail_routineExercisesLabel(preview),
                     style: const TextStyle(color: Colors.white60),
                   ),
                 ),
               Padding(
                 padding: const EdgeInsets.only(top: 4),
                 child: Text(
-                  "Time: ${_formatDuration(duration)}",
+                  local.workoutDetail_routineTimeLabel(
+                    _formatDuration(duration),
+                  ),
                   style: const TextStyle(color: Colors.white60),
                 ),
               ),
               Text(
-                "Calories: ${calories.toStringAsFixed(0)} kcal",
+                local.workoutDetail_routineCaloriesLabel(
+                  calories.toStringAsFixed(0),
+                ),
                 style: const TextStyle(color: Colors.white60),
               ),
             ],
@@ -300,7 +307,8 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
   }
 
   String _formatDuration(Duration? duration) {
-    if (duration == null) return "Undefined";
+    if (duration == null)
+      return AppLocalizations.of(context)!.workoutDetail_durationUndefined;
     final hours = duration.inHours;
     final minutes = duration.inMinutes.remainder(60);
     return hours > 0 ? "${hours}h ${minutes}m" : "${minutes}m";

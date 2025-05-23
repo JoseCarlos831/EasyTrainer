@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../providers/user_provider.dart';
 
@@ -9,6 +10,7 @@ class DeleteAccountPage extends StatelessWidget {
   const DeleteAccountPage({super.key});
 
   void _confirmDelete(BuildContext context, String userName) {
+    final local = AppLocalizations.of(context)!;
     String inputName = '';
     bool isValid = false;
 
@@ -35,30 +37,30 @@ class DeleteAccountPage extends StatelessWidget {
                     color: Colors.redAccent,
                   ),
                   const SizedBox(height: 16),
-                  const Text(
-                    'Delete your account?',
-                    style: TextStyle(
+                  Text(
+                    local.deleteAccountPage_modalTitle,
+                    style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                   ),
                   const SizedBox(height: 12),
-                  const Text(
-                    'This action is permanent and cannot be undone.\nPlease confirm by typing your full name.',
+                  Text(
+                    local.deleteAccountPage_modalDescription,
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white70),
+                    style: const TextStyle(color: Colors.white70),
                   ),
                   const SizedBox(height: 24),
                   TextField(
                     style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                      labelText: "Your full name",
-                      labelStyle: TextStyle(color: Colors.white60),
-                      enabledBorder: UnderlineInputBorder(
+                    decoration: InputDecoration(
+                      labelText: local.deleteAccountPage_fullNameInputLabel,
+                      labelStyle: const TextStyle(color: Colors.white60),
+                      enabledBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white38),
                       ),
-                      focusedBorder: UnderlineInputBorder(
+                      focusedBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.tealAccent),
                       ),
                     ),
@@ -81,9 +83,9 @@ class DeleteAccountPage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(30),
                             ),
                           ),
-                          child: const Text(
-                            "Cancel",
-                            style: TextStyle(color: Colors.tealAccent),
+                          child: Text(
+                            local.deleteAccountPage_cancelButton,
+                            style: const TextStyle(color: Colors.tealAccent),
                           ),
                         ),
                       ),
@@ -99,30 +101,23 @@ class DeleteAccountPage extends StatelessWidget {
                                             .deleteAccount();
                                     Navigator.pop(context);
 
-                                    if (success) {
-                                      ScaffoldMessenger.of(
-                                        context,
-                                      ).showSnackBar(
-                                        const SnackBar(
-                                          content: Text(
-                                            'Account deleted successfully',
-                                          ),
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          success
+                                              ? local
+                                                  .deleteAccountPage_successSnackbar
+                                              : local
+                                                  .deleteAccountPage_errorSnackbar,
                                         ),
-                                      );
+                                      ),
+                                    );
+
+                                    if (success) {
                                       Navigator.pushNamedAndRemoveUntil(
                                         context,
                                         '/login',
                                         (_) => false,
-                                      );
-                                    } else {
-                                      ScaffoldMessenger.of(
-                                        context,
-                                      ).showSnackBar(
-                                        const SnackBar(
-                                          content: Text(
-                                            'Failed to delete account',
-                                          ),
-                                        ),
                                       );
                                     }
                                   }
@@ -134,9 +129,9 @@ class DeleteAccountPage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(30),
                             ),
                           ),
-                          child: const Text(
-                            "Delete",
-                            style: TextStyle(color: Colors.white),
+                          child: Text(
+                            local.deleteAccountPage_modalDeleteButton,
+                            style: const TextStyle(color: Colors.white),
                           ),
                         ),
                       ),
@@ -154,6 +149,7 @@ class DeleteAccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = context.watch<UserProvider>().user;
+    final local = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: const Color(0xFF0B0622),
@@ -174,9 +170,8 @@ class DeleteAccountPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-
               Text(
-                "Delete Account",
+                local.deleteAccountPage_title,
                 style: const TextStyle(
                   color: Colors.redAccent,
                   fontSize: 26,
@@ -184,22 +179,18 @@ class DeleteAccountPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
-
               if (user != null)
                 Text(
                   user.name,
                   style: const TextStyle(color: Colors.white70, fontSize: 16),
                 ),
-
               const SizedBox(height: 30),
-
-              const Text(
-                "Deleting your account will permanently remove all your data.\nThis action cannot be undone.",
+              Text(
+                local.deleteAccountPage_warningText,
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white70, fontSize: 16),
+                style: const TextStyle(color: Colors.white70, fontSize: 16),
               ),
               const SizedBox(height: 50),
-
               SizedBox(
                 width: double.infinity,
                 height: 50,
@@ -215,9 +206,9 @@ class DeleteAccountPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(30),
                     ),
                   ),
-                  child: const Text(
-                    "Delete My Account",
-                    style: TextStyle(
+                  child: Text(
+                    local.deleteAccountPage_deleteMyAccountButton,
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -226,7 +217,6 @@ class DeleteAccountPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-
               SizedBox(
                 width: double.infinity,
                 height: 50,
@@ -238,9 +228,9 @@ class DeleteAccountPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(40),
                     ),
                   ),
-                  child: const Text(
-                    "Cancel",
-                    style: TextStyle(
+                  child: Text(
+                    local.deleteAccountPage_cancelButton,
+                    style: const TextStyle(
                       color: Colors.tealAccent,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

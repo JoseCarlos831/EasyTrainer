@@ -1,6 +1,9 @@
+// lib/src/screens/private/analytics_page.dart
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AnalyticsPage extends StatefulWidget {
   const AnalyticsPage({super.key});
@@ -31,15 +34,18 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
   }
 
   void _continue() {
+    final local = AppLocalizations.of(context)!;
     if (_selectedFile != null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("File uploaded successfully!")),
+        SnackBar(content: Text(local.analyticsPage_successSnackbar)),
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: const Color(0xFF0B0622),
       body: SafeArea(
@@ -48,18 +54,21 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Upload a file",
-                style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+              Text(
+                local.analyticsPage_title,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 10),
-              const Text(
-                "Regulations require you to upload a national identity card. Don't worry, your data will stay safe and private.",
-                style: TextStyle(color: Colors.white70, fontSize: 14),
+              Text(
+                local.analyticsPage_description,
+                style: const TextStyle(color: Colors.white70, fontSize: 14),
               ),
               const SizedBox(height: 24),
 
-              // File Selection Area
               GestureDetector(
                 onTap: _pickFile,
                 child: Container(
@@ -71,63 +80,75 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Center(
-                    child: _selectedFile != null
-                        ? Text(
-                            "File: ${_selectedFile!.path.split('/').last}",
-                            style: const TextStyle(color: Colors.white70),
-                          )
-                        : Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Icon(Icons.cloud_upload, color: Colors.tealAccent, size: 36),
-                              SizedBox(height: 10),
-                              Text("Select file", style: TextStyle(color: Colors.white70)),
-                            ],
-                          ),
+                    child:
+                        _selectedFile != null
+                            ? Text(
+                              "${local.analyticsPage_filePrefix} ${_selectedFile!.path.split('/').last}",
+                              style: const TextStyle(color: Colors.white70),
+                            )
+                            : Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.cloud_upload,
+                                  color: Colors.tealAccent,
+                                  size: 36,
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  local.analyticsPage_selectFileLabel,
+                                  style: const TextStyle(color: Colors.white70),
+                                ),
+                              ],
+                            ),
                   ),
                 ),
               ),
 
               const SizedBox(height: 24),
-              const Center(child: Text("or", style: TextStyle(color: Colors.white38))),
+              Center(
+                child: Text(
+                  local.analyticsPage_orSeparator,
+                  style: const TextStyle(color: Colors.white38),
+                ),
+              ),
               const SizedBox(height: 16),
 
-              // Camera Button
               SizedBox(
                 width: double.infinity,
                 height: 48,
                 child: ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF29243B),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                   ),
                   onPressed: _openCamera,
                   icon: const Icon(Icons.photo_camera, color: Colors.white),
-                  label: const Text(
-                    "Open Camera & Take Photo",
-                    style: TextStyle(color: Colors.white),
+                  label: Text(
+                    local.analyticsPage_openCameraButton,
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
               ),
 
               const Spacer(),
 
-              // Continue Button
               SizedBox(
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
                   onPressed: _selectedFile != null ? _continue : null,
                   style: ElevatedButton.styleFrom(
-
-                    side: BorderSide(color: Colors.tealAccent),
+                    side: const BorderSide(color: Colors.tealAccent),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(40),
                     ),
                   ),
                   child: Text(
-                    "Continue",
-                    style: TextStyle(
+                    local.analyticsPage_continueButton,
+                    style: const TextStyle(
                       color: Colors.tealAccent,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

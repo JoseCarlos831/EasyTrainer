@@ -5,7 +5,7 @@ enum Environment { local, emulator, remote }
 class Env {
   static const Environment environment = Environment.local;
 
-  static const String _remoteDomain = 'ec2-54-83-143-23.compute-1.amazonaws.com';
+  static const String _remoteDomain = 'ec2-54-211-0-112.compute-1.amazonaws.com';
 
   static const String _localHost = 'http://localhost:5130/easytrainer/api/v1';
   static const String _emulatorHost = 'http://10.0.2.2:5130/easytrainer/api/v1';

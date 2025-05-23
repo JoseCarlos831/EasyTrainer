@@ -1,4 +1,7 @@
+// lib/src/screens/public/forgot_password_page.dart
+
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -11,10 +14,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final TextEditingController _emailController = TextEditingController();
 
   void _recoverPassword() {
+    final local = AppLocalizations.of(context)!;
     final email = _emailController.text;
+
     if (email.isEmpty || !email.contains("@")) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please enter a valid email.")),
+        SnackBar(content: Text(local.forgotPasswordPage_invalidEmailFeedback)),
       );
       return;
     }
@@ -22,22 +27,22 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     // Aqui você pode integrar com Firebase Auth ou outro backend
     print("Enviando email de recuperação para: $email");
 
-    // Mostrar feedback
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Recovery instructions sent to your email.")),
+      SnackBar(content: Text(local.forgotPasswordPage_successFeedback)),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
+
     return Scaffold(
       body: Stack(
         children: [
-          // Imagem de fundo
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/imagem/TelaLogin.png'),
+                image: const AssetImage('assets/imagem/TelaLogin.png'),
                 fit: BoxFit.cover,
                 colorFilter: ColorFilter.mode(
                   Colors.black.withOpacity(0.5),
@@ -46,52 +51,47 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               ),
             ),
           ),
-
-          // Conteúdo principal
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ListView(
                 children: [
-                  // Botão de voltar
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: IconButton(
-                        icon: Icon(Icons.arrow_back, color: Colors.white, size: 30),
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                          size: 30,
+                        ),
                         onPressed: () => Navigator.pop(context),
                       ),
                     ),
                   ),
-                  SizedBox(height: 40),
-
-                  // Título
+                  const SizedBox(height: 40),
                   Text(
-                    "Forgot Password?",
-                    style: TextStyle(
+                    local.forgotPasswordPage_title,
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 10),
-
-                  // Subtexto
+                  const SizedBox(height: 10),
                   Text(
-                    "Don't worry! It occurs. Please enter the email address linked with your account.",
-                    style: TextStyle(color: Colors.white70),
+                    local.forgotPasswordPage_subtitle,
+                    style: const TextStyle(color: Colors.white70),
                   ),
-                  SizedBox(height: 30),
-
-                  // Campo de email
+                  const SizedBox(height: 30),
                   TextField(
                     controller: _emailController,
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
-                      hintText: "Enter your email",
-                      hintStyle: TextStyle(color: Colors.white70),
+                      hintText: local.forgotPasswordPage_emailHint,
+                      hintStyle: const TextStyle(color: Colors.white70),
                       filled: true,
                       fillColor: Colors.white.withOpacity(0.2),
                       border: OutlineInputBorder(
@@ -100,9 +100,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 30),
-
-                  // Botão continue
+                  const SizedBox(height: 30),
                   SizedBox(
                     width: double.infinity,
                     height: 50,
@@ -115,23 +113,28 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         ),
                       ),
                       child: Text(
-                        "Continue",
-                        style: TextStyle(color: Colors.white,fontSize: 16, fontWeight: FontWeight.bold),
+                        local.forgotPasswordPage_continueButton,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
-
-                  // Link para login
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Remember Password?", style: TextStyle(color: Colors.white70)),
+                      Text(
+                        local.forgotPasswordPage_rememberPrompt,
+                        style: const TextStyle(color: Colors.white70),
+                      ),
                       TextButton(
                         onPressed: () => Navigator.pushNamed(context, '/login'),
                         child: Text(
-                          "Login",
-                          style: TextStyle(
+                          local.forgotPasswordPage_loginButton,
+                          style: const TextStyle(
                             color: Colors.lightBlueAccent,
                             fontWeight: FontWeight.bold,
                           ),

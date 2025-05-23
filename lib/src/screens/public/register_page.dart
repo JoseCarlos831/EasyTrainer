@@ -1,5 +1,8 @@
+// lib/src/screens/public/success_page.dart
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../providers/auth_provider.dart';
 import '../../services/auth_service.dart';
@@ -23,6 +26,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final _confirmPasswordController = TextEditingController();
 
   void _register() async {
+    // final local = AppLocalizations.of(context)!;
+
     if (_formKey.currentState!.validate()) {
       final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
@@ -50,14 +55,15 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
+
     return Scaffold(
       body: Stack(
         children: [
-          // Imagem de fundo
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/imagem/TelaLogin.png'),
+                image: const AssetImage('assets/imagem/TelaLogin.png'),
                 fit: BoxFit.cover,
                 colorFilter: ColorFilter.mode(
                   Colors.black.withOpacity(0.5),
@@ -66,8 +72,6 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
           ),
-
-          // Conteúdo principal
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -75,13 +79,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 key: _formKey,
                 child: ListView(
                   children: [
-                    // Botão de voltar
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Padding(
                         padding: const EdgeInsets.only(top: 10, left: 5),
                         child: IconButton(
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.arrow_back,
                             color: Colors.white,
                             size: 30,
@@ -90,51 +93,54 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 10),
-
-                    // Título
+                    const SizedBox(height: 10),
                     Center(
                       child: Text(
-                        "Sign up",
-                        style: TextStyle(
+                        local.registerPage_title,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 26,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
 
-                    _buildTextField(_usernameController, "Username"),
-                    SizedBox(height: 15),
-                    _buildTextField(_emailController, "Email", email: true),
-                    SizedBox(height: 15),
+                    _buildTextField(
+                      _usernameController,
+                      local.registerPage_usernameHint,
+                    ),
+                    const SizedBox(height: 15),
+                    _buildTextField(
+                      _emailController,
+                      local.registerPage_emailHint,
+                      email: true,
+                    ),
+                    const SizedBox(height: 15),
                     _buildTextField(
                       _passwordController,
-                      "Password",
+                      local.registerPage_passwordHint,
                       isPassword: true,
                       obscure: _obscurePassword,
-                      toggle: () {
-                        setState(() => _obscurePassword = !_obscurePassword);
-                      },
+                      toggle:
+                          () => setState(
+                            () => _obscurePassword = !_obscurePassword,
+                          ),
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     _buildTextField(
                       _confirmPasswordController,
-                      "Confirm password",
+                      local.registerPage_confirmPasswordHint,
                       isPassword: true,
                       obscure: _obscureConfirmPassword,
-                      toggle: () {
-                        setState(
-                          () =>
-                              _obscureConfirmPassword =
-                                  !_obscureConfirmPassword,
-                        );
-                      },
+                      toggle:
+                          () => setState(
+                            () =>
+                                _obscureConfirmPassword =
+                                    !_obscureConfirmPassword,
+                          ),
                     ),
-                    SizedBox(height: 25),
-
-                    // Botão de registro
+                    const SizedBox(height: 25),
                     SizedBox(
                       width: double.infinity,
                       height: 50,
@@ -147,8 +153,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         ),
                         child: Text(
-                          "Agree and Register",
-                          style: TextStyle(
+                          local.registerPage_submitButton,
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -156,21 +162,17 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
-
-                    // Texto "Ou login com"
+                    const SizedBox(height: 20),
                     Center(
                       child: Text(
-                        "Or Login with",
-                        style: TextStyle(color: Colors.white70),
+                        local.registerPage_socialLoginLabel,
+                        style: const TextStyle(color: Colors.white70),
                       ),
                     ),
-                    SizedBox(height: 15),
-
-                    // Botões sociais
+                    const SizedBox(height: 15),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: const [
                         SocialLoginButton(
                           icon: Icons.facebook,
                           color: Colors.blue,
@@ -208,11 +210,11 @@ class _RegisterPageState extends State<RegisterPage> {
     return TextFormField(
       controller: controller,
       obscureText: obscure,
-      style: TextStyle(color: Colors.white),
+      style: const TextStyle(color: Colors.white),
       keyboardType: email ? TextInputType.emailAddress : TextInputType.text,
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: TextStyle(color: Colors.white70),
+        hintStyle: const TextStyle(color: Colors.white70),
         filled: true,
         fillColor: Colors.white.withOpacity(0.2),
         border: OutlineInputBorder(
@@ -231,9 +233,19 @@ class _RegisterPageState extends State<RegisterPage> {
                 : null,
       ),
       validator: (value) {
-        if (value == null || value.isEmpty) return 'Enter $hint';
-        if (hint == "Confirm password" && value != _passwordController.text) {
-          return 'Passwords do not match';
+        if (value == null || value.isEmpty) {
+          return AppLocalizations.of(
+            context,
+          )!.registerPage_validatorRequired(hint);
+        }
+        if (hint ==
+                AppLocalizations.of(
+                  context,
+                )!.registerPage_confirmPasswordHint &&
+            value != _passwordController.text) {
+          return AppLocalizations.of(
+            context,
+          )!.registerPage_validatorPasswordsMatch;
         }
         return null;
       },

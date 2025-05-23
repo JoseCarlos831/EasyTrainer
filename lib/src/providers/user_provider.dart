@@ -20,29 +20,22 @@ class UserProvider with ChangeNotifier {
 
   void clear() {
     _user = null;
+    _token = null;
     notifyListeners();
   }
 
   Future<bool> updateUser(UserModel updatedUser) async {
+    if (_token == null) return false;
+
     try {
-      print('[DEBUG] Entrando em UserProvider.updateUser');
-      if (_token == null) {
-        print('[ERROR] Token está nulo');
-        return false;
-      }
-
-      print('[DEBUG] Chamando UserService.updateUser...');
       final success = await UserService().updateUser(updatedUser, _token!);
-      print('[DEBUG] Retorno do UserService: $success');
-
       if (success) {
         _user = updatedUser;
         notifyListeners();
       }
-
       return success;
     } catch (e) {
-      print('[ERROR] Exceção em updateUser: $e');
+      print('[UserProvider] Erro ao atualizar usuário: $e');
       return false;
     }
   }
@@ -53,23 +46,29 @@ class UserProvider with ChangeNotifier {
   ) async {
     if (_user == null || _token == null) return false;
 
-    return await UserService().changePassword(
-      userId: _user!.id,
-      currentPassword: currentPassword,
-      newPassword: newPassword,
-      token: _token!,
-    );
+    try {
+      return await UserService().changePassword(
+        userId: _user!.id,
+        currentPassword: currentPassword,
+        newPassword: newPassword,
+        token: _token!,
+      );
+    } catch (e) {
+      print('[UserProvider] Erro ao alterar senha: $e');
+      return false;
+    }
   }
 
   Future<bool> deleteAccount() async {
     if (_user == null || _token == null) return false;
 
-    final success = await UserService().deleteAccount(_user!.id, _token!);
-
-    if (success) {
-      clear(); // limpa usuário da memória
+    try {
+      final success = await UserService().deleteAccount(_user!.id, _token!);
+      if (success) clear();
+      return success;
+    } catch (e) {
+      print('[UserProvider] Erro ao deletar conta: $e');
+      return false;
     }
-
-    return success;
   }
 }

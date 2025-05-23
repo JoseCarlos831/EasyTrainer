@@ -1,0 +1,657 @@
+{
+  "@@locale": "pt",
+  "welcomePage_title": "BEM-VINDO AO\nEASY TRAINER",
+  "@welcomePage_title": {
+    "description": "Texto de título principal na tela de boas-vindas"
+  },
+  "welcomePage_subtitle": "Torne-se a melhor versão de si mesmo com nosso app de treino!",
+  "@welcomePage_subtitle": {
+    "description": "Subtítulo motivacional sob o título na tela de boas-vindas"
+  },
+  "welcomePage_signInButton": "Entrar",
+  "@welcomePage_signInButton": {
+    "description": "Texto do botão que leva à tela de login na tela de boas-vindas"
+  },
+  "successPage_title": "Senha alterada!",
+  "@successPage_title": {
+    "description": "Título que confirma a alteração da senha"
+  },
+  "successPage_description": "Sua senha foi alterada com sucesso.",
+  "@successPage_description": {
+    "description": "Mensagem de confirmação exibida abaixo do título"
+  },
+  "successPage_backToLoginButton": "Voltar para o login",
+  "@successPage_backToLoginButton": {
+    "description": "Texto do botão que leva de volta à tela de login"
+  },
+  "registerPage_title": "Registrar",
+  "@registerPage_title": {
+    "description": "Título na tela de registro"
+  },
+  "registerPage_usernameHint": "Nome de usuário",
+  "@registerPage_usernameHint": {
+    "description": "Texto de dica para o campo de nome de usuário"
+  },
+  "registerPage_emailHint": "Email",
+  "@registerPage_emailHint": {
+    "description": "Texto de dica para o campo de email"
+  },
+  "registerPage_passwordHint": "Senha",
+  "@registerPage_passwordHint": {
+    "description": "Texto de dica para o campo de senha"
+  },
+  "registerPage_confirmPasswordHint": "Confirmar senha",
+  "@registerPage_confirmPasswordHint": {
+    "description": "Texto de dica para o campo de confirmação de senha"
+  },
+  "registerPage_submitButton": "Concordar e registrar",
+  "@registerPage_submitButton": {
+    "description": "Texto do botão para enviar o formulário de registro"
+  },
+  "registerPage_socialLoginLabel": "Ou entre com",
+  "@registerPage_socialLoginLabel": {
+    "description": "Texto exibido acima dos botões de login social"
+  },
+  "registerPage_validatorRequired": "Preencha o campo {field}",
+  "@registerPage_validatorRequired": {
+    "description": "Mensagem de validação quando um campo está vazio; use {field} como nome do campo",
+    "placeholders": {
+      "field": {
+        "type": "String",
+        "example": "email"
+      }
+    }
+  },
+  "registerPage_validatorPasswordsMatch": "As senhas não coincidem",
+  "@registerPage_validatorPasswordsMatch": {
+    "description": "Mensagem de erro quando as senhas não coincidem"
+  },
+  "loginPage_welcomeMessage": "Bem-vindo de volta!\nFicamos felizes em vê-lo novamente!",
+  "@loginPage_welcomeMessage": {
+    "description": "Mensagem de boas-vindas principal na tela de login"
+  },
+  "loginPage_emailHint": "Digite seu email",
+  "@loginPage_emailHint": {
+    "description": "Texto de dica para o campo de email"
+  },
+  "loginPage_passwordHint": "Digite sua senha",
+  "@loginPage_passwordHint": {
+    "description": "Texto de dica para o campo de senha"
+  },
+  "loginPage_validatorPasswordRequired": "Por favor, digite sua senha",
+  "@loginPage_validatorPasswordRequired": {
+    "description": "Mensagem de validação quando o campo de senha está vazio"
+  },
+  "loginPage_validatorFieldRequired": "Por favor, preencha o campo {field}",
+  "@loginPage_validatorFieldRequired": {
+    "description": "Mensagem genérica de campo obrigatório",
+    "placeholders": {
+      "field": {
+        "type": "String",
+        "example": "senha"
+      }
+    }
+  },
+  "loginPage_validatorEmailInvalid": "Digite um email válido",
+  "@loginPage_validatorEmailInvalid": {
+    "description": "Mensagem de erro quando o email está inválido"
+  },
+  "loginPage_forgotPasswordLink": "Esqueceu a senha?",
+  "@loginPage_forgotPasswordLink": {
+    "description": "Texto para o link de esqueci minha senha"
+  },
+  "loginPage_signInButton": "Entrar",
+  "@loginPage_signInButton": {
+    "description": "Texto do botão de login"
+  },
+  "loginPage_orLoginWith": "Ou entre com",
+  "@loginPage_orLoginWith": {
+    "description": "Texto acima das opções de login social"
+  },
+  "loginPage_registerPrompt": "Não tem uma conta?",
+  "@loginPage_registerPrompt": {
+    "description": "Texto antes do link de cadastro"
+  },
+  "loginPage_registerNowLink": "Cadastre-se agora",
+  "@loginPage_registerNowLink": {
+    "description": "Texto do link de cadastro"
+  },
+  "forgotPasswordPage_title": "Esqueceu a senha?",
+  "@forgotPasswordPage_title": {
+    "description": "Título na tela de recuperação de senha"
+  },
+  "forgotPasswordPage_subtitle": "Não se preocupe! Isso acontece. Por favor, digite o email vinculado à sua conta.",
+  "@forgotPasswordPage_subtitle": {
+    "description": "Texto de instrução na tela de recuperação"
+  },
+  "forgotPasswordPage_emailHint": "Digite seu email",
+  "@forgotPasswordPage_emailHint": {
+    "description": "Texto de dica para o campo de email"
+  },
+  "forgotPasswordPage_continueButton": "Continuar",
+  "@forgotPasswordPage_continueButton": {
+    "description": "Texto do botão para enviar o pedido de recuperação"
+  },
+  "forgotPasswordPage_rememberPrompt": "Lembrou a senha?",
+  "@forgotPasswordPage_rememberPrompt": {
+    "description": "Texto antes do link para login"
+  },
+  "forgotPasswordPage_loginButton": "Entrar",
+  "@forgotPasswordPage_loginButton": {
+    "description": "Texto do botão/link de login"
+  },
+  "forgotPasswordPage_invalidEmailFeedback": "Por favor, digite um email válido.",
+  "@forgotPasswordPage_invalidEmailFeedback": {
+    "description": "Mensagem exibida quando o email é inválido"
+  },
+  "forgotPasswordPage_successFeedback": "Instruções de recuperação enviadas para seu email.",
+  "@forgotPasswordPage_successFeedback": {
+    "description": "Mensagem exibida quando o email é enviado com sucesso"
+  },
+  "verifyEmailPage_title": "Verifique seu Email",
+  "@verifyEmailPage_title": {
+    "description": "Título da tela de verificação de email"
+  },
+  "verifyEmailPage_instruction": "Digite o código de verificação que acabamos de enviar para seu email.",
+  "@verifyEmailPage_instruction": {
+    "description": "Texto com instruções para inserir o código enviado por email"
+  },
+  "verifyEmailPage_continueButton": "Continuar",
+  "@verifyEmailPage_continueButton": {
+    "description": "Texto do botão para verificar o código"
+  },
+  "verifyEmailPage_resendPrompt": "Não recebeu o código?",
+  "@verifyEmailPage_resendPrompt": {
+    "description": "Texto antes do link de reenvio"
+  },
+  "verifyEmailPage_resendLink": "Reenviar",
+  "@verifyEmailPage_resendLink": {
+    "description": "Texto do link de reenvio do código"
+  },
+  "settingsPage_title": "Configurações",
+  "@settingsPage_title": {
+    "description": "Título da tela de configurações"
+  },
+  "settingsPage_updatePassword": "Atualizar Senha",
+  "@settingsPage_updatePassword": {
+    "description": "Opção para atualizar a senha do usuário"
+  },
+  "settingsPage_deleteAccount": "Excluir Conta",
+  "@settingsPage_deleteAccount": {
+    "description": "Opção para excluir a conta do usuário"
+  },
+  "resetPasswordPage_title": "Verifique seu Email",
+  "@resetPasswordPage_title": {
+    "description": "Título exibido no topo da tela de redefinição de senha"
+  },
+  "resetPasswordPage_instruction": "Digite o código de verificação que acabamos de enviar para seu email.",
+  "@resetPasswordPage_instruction": {
+    "description": "Instrução exibida abaixo do título na tela de redefinição de senha"
+  },
+  "resetPasswordPage_newPasswordHint": "Nova Senha",
+  "@resetPasswordPage_newPasswordHint": {
+    "description": "Texto de dica para o campo de nova senha"
+  },
+  "resetPasswordPage_confirmPasswordHint": "Confirmar Senha",
+  "@resetPasswordPage_confirmPasswordHint": {
+    "description": "Texto de dica para o campo de confirmação de senha"
+  },
+  "resetPasswordPage_resetButton": "Redefinir Senha",
+  "@resetPasswordPage_resetButton": {
+    "description": "Texto do botão para submeter a redefinição de senha"
+  },
+  "resetPasswordPage_passwordMismatch": "As senhas não coincidem",
+  "@resetPasswordPage_passwordMismatch": {
+    "description": "Mensagem exibida quando a senha e a confirmação não coincidem"
+  },
+  "profilePage_title": "Perfil",
+  "@profilePage_title": {
+    "description": "Título da tela de perfil"
+  },
+  "profilePage_editProfile": "Editar Perfil",
+  "@profilePage_editProfile": {
+    "description": "Texto da opção de editar perfil"
+  },
+  "profilePage_settings": "Configurações",
+  "@profilePage_settings": {
+    "description": "Texto da opção de configurações"
+  },
+  "profilePage_logout": "Sair",
+  "@profilePage_logout": {
+    "description": "Texto da opção para fazer logout"
+  },
+  "profilePage_logoutDialogTitle": "Sair",
+  "@profilePage_logoutDialogTitle": {
+    "description": "Título do diálogo de confirmação de logout"
+  },
+  "profilePage_logoutDialogMessage": "Você tem certeza que deseja sair?",
+  "@profilePage_logoutDialogMessage": {
+    "description": "Mensagem exibida no diálogo de logout"
+  },
+  "profilePage_logoutConfirmButton": "Confirmar",
+  "@profilePage_logoutConfirmButton": {
+    "description": "Texto do botão de confirmação no diálogo de logout"
+  },
+  "passwordSettingsPage_title": "Atualizar Senha",
+  "@passwordSettingsPage_title": {
+    "description": "Título da tela de configurações de senha"
+  },
+  "passwordSettingsPage_currentPassword": "Senha Atual",
+  "@passwordSettingsPage_currentPassword": {
+    "description": "Texto de dica para o campo de senha atual"
+  },
+  "passwordSettingsPage_forgotPasswordLink": "Esqueceu sua senha?",
+  "@passwordSettingsPage_forgotPasswordLink": {
+    "description": "Texto do link para recuperar senha"
+  },
+  "passwordSettingsPage_newPassword": "Nova Senha",
+  "@passwordSettingsPage_newPassword": {
+    "description": "Texto de dica para o campo de nova senha"
+  },
+  "passwordSettingsPage_confirmNewPassword": "Confirmar Nova Senha",
+  "@passwordSettingsPage_confirmNewPassword": {
+    "description": "Texto de dica para confirmar a nova senha"
+  },
+  "passwordSettingsPage_updateButton": "Atualizar Senha",
+  "@passwordSettingsPage_updateButton": {
+    "description": "Texto do botão para atualizar a senha"
+  },
+  "passwordSettingsPage_mismatchError": "As novas senhas não coincidem",
+  "@passwordSettingsPage_mismatchError": {
+    "description": "Mensagem de erro quando as senhas novas não coincidem"
+  },
+  "passwordSettingsPage_successMessage": "Senha atualizada com sucesso!",
+  "@passwordSettingsPage_successMessage": {
+    "description": "Mensagem de sucesso ao atualizar a senha"
+  },
+  "passwordSettingsPage_errorMessage": "Falha ao atualizar a senha.",
+  "@passwordSettingsPage_errorMessage": {
+    "description": "Mensagem de erro ao tentar atualizar a senha"
+  },
+  "editProfilePage_title": "Editar Perfil",
+  "@editProfilePage_title": {
+    "description": "Título da tela de edição de perfil"
+  },
+  "editProfilePage_fullNameLabel": "Nome Completo",
+  "@editProfilePage_fullNameLabel": {
+    "description": "Texto do campo para nome completo"
+  },
+  "editProfilePage_emailLabel": "Email",
+  "@editProfilePage_emailLabel": {
+    "description": "Texto do campo de email"
+  },
+  "editProfilePage_phoneLabel": "Número de Telefone",
+  "@editProfilePage_phoneLabel": {
+    "description": "Texto do campo de telefone"
+  },
+  "editProfilePage_birthdateLabel": "Data de Nascimento",
+  "@editProfilePage_birthdateLabel": {
+    "description": "Texto do campo de data de nascimento"
+  },
+  "editProfilePage_weightLabel": "Peso (kg)",
+  "@editProfilePage_weightLabel": {
+    "description": "Texto do campo de peso"
+  },
+  "editProfilePage_heightLabel": "Altura (cm)",
+  "@editProfilePage_heightLabel": {
+    "description": "Texto do campo de altura"
+  },
+  "editProfilePage_cameraOption": "Câmera",
+  "@editProfilePage_cameraOption": {
+    "description": "Opção para selecionar imagem da câmera"
+  },
+  "editProfilePage_galleryOption": "Galeria",
+  "@editProfilePage_galleryOption": {
+    "description": "Opção para selecionar imagem da galeria"
+  },
+  "editProfilePage_imageUploadedSnackbar": "Imagem carregada.",
+  "@editProfilePage_imageUploadedSnackbar": {
+    "description": "Mensagem após imagem carregada"
+  },
+  "editProfilePage_updateButton": "Atualizar Perfil",
+  "@editProfilePage_updateButton": {
+    "description": "Texto do botão para atualizar perfil"
+  },
+  "editProfilePage_successSnackbar": "Perfil atualizado com sucesso!",
+  "@editProfilePage_successSnackbar": {
+    "description": "Mensagem de sucesso ao atualizar perfil"
+  },
+  "editProfilePage_errorSnackbar": "Erro ao atualizar perfil.",
+  "@editProfilePage_errorSnackbar": {
+    "description": "Mensagem de erro ao atualizar perfil"
+  },
+  "deleteAccountPage_title": "Excluir Conta",
+  "@deleteAccountPage_title": {
+    "description": "Título da tela de exclusão de conta"
+  },
+  "deleteAccountPage_warningText": "Excluir sua conta removerá permanentemente todos os seus dados.\nEssa ação não pode ser desfeita.",
+  "@deleteAccountPage_warningText": {
+    "description": "Mensagem de aviso na tela de exclusão"
+  },
+  "deleteAccountPage_deleteMyAccountButton": "Excluir Minha Conta",
+  "@deleteAccountPage_deleteMyAccountButton": {
+    "description": "Botão para iniciar a exclusão da conta"
+  },
+  "deleteAccountPage_cancelButton": "Cancelar",
+  "@deleteAccountPage_cancelButton": {
+    "description": "Texto para os botões de cancelamento"
+  },
+  "deleteAccountPage_modalTitle": "Deseja excluir sua conta?",
+  "@deleteAccountPage_modalTitle": {
+    "description": "Título do modal de confirmação"
+  },
+  "deleteAccountPage_modalDescription": "Essa ação é permanente e não poderá ser desfeita.\nConfirme digitando seu nome completo.",
+  "@deleteAccountPage_modalDescription": {
+    "description": "Texto explicativo dentro do modal"
+  },
+  "deleteAccountPage_fullNameInputLabel": "Seu nome completo",
+  "@deleteAccountPage_fullNameInputLabel": {
+    "description": "Rótulo do campo de confirmação de nome"
+  },
+  "deleteAccountPage_modalDeleteButton": "Excluir",
+  "@deleteAccountPage_modalDeleteButton": {
+    "description": "Botão do modal para excluir a conta"
+  },
+  "deleteAccountPage_successSnackbar": "Conta excluída com sucesso",
+  "@deleteAccountPage_successSnackbar": {
+    "description": "Mensagem ao excluir conta com sucesso"
+  },
+  "deleteAccountPage_errorSnackbar": "Falha ao excluir a conta",
+  "@deleteAccountPage_errorSnackbar": {
+    "description": "Mensagem de erro ao tentar excluir a conta"
+  },
+  "analyticsPage_title": "Enviar um arquivo",
+  "@analyticsPage_title": {
+    "description": "Título da tela de envio de arquivo (análises)"
+  },
+  "analyticsPage_description": "Regulamentos exigem que você envie um documento de identidade. Não se preocupe, seus dados estarão seguros e privados.",
+  "@analyticsPage_description": {
+    "description": "Descrição explicativa abaixo do título"
+  },
+  "analyticsPage_selectFileLabel": "Selecionar arquivo",
+  "@analyticsPage_selectFileLabel": {
+    "description": "Texto exibido quando nenhum arquivo foi selecionado"
+  },
+  "analyticsPage_orSeparator": "ou",
+  "@analyticsPage_orSeparator": {
+    "description": "Texto separador entre botão de arquivo e câmera"
+  },
+  "analyticsPage_openCameraButton": "Abrir câmera e tirar foto",
+  "@analyticsPage_openCameraButton": {
+    "description": "Botão para abrir a câmera e tirar uma foto"
+  },
+  "analyticsPage_continueButton": "Continuar",
+  "@analyticsPage_continueButton": {
+    "description": "Texto do botão de continuar"
+  },
+  "analyticsPage_successSnackbar": "Arquivo enviado com sucesso!",
+  "@analyticsPage_successSnackbar": {
+    "description": "Mensagem de sucesso após envio de arquivo"
+  },
+  "analyticsPage_filePrefix": "Arquivo:",
+  "@analyticsPage_filePrefix": {
+    "description": "Prefixo para exibir nome do arquivo selecionado"
+  },
+  "workoutSection_noWorkoutsFound": "Nenhum treino encontrado.",
+  "@workoutSection_noWorkoutsFound": {
+    "description": "Mensagem exibida quando nenhum treino corresponde à pesquisa"
+  },
+  "workoutSection_progressZero": "0%",
+  "@workoutSection_progressZero": {
+    "description": "Texto de progresso exibido no indicador circular"
+  },
+  "homePage_notificationsTitle": "Notificações",
+  "@homePage_notificationsTitle": {
+    "description": "Título do painel inferior de notificações"
+  },
+  "homePage_notificationWorkoutTitle": "Novo Treino",
+  "@homePage_notificationWorkoutTitle": {
+    "description": "Título da notificação sobre um novo treino"
+  },
+  "homePage_notificationWorkoutBody": "Seu treino de costas foi atualizado",
+  "@homePage_notificationWorkoutBody": {
+    "description": "Corpo da notificação sobre atualização de treino"
+  },
+  "homePage_notificationGoalTitle": "Meta Alcançada!",
+  "@homePage_notificationGoalTitle": {
+    "description": "Título da notificação de meta atingida"
+  },
+  "homePage_notificationGoalBody": "Você completou 80% dos seus treinos esta semana.",
+  "@homePage_notificationGoalBody": {
+    "description": "Texto explicativo da notificação de meta atingida"
+  },
+  "homePage_greeting": "Olá, {name}",
+  "@homePage_greeting": {
+    "description": "Saudação personalizada com o nome do usuário",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "nome do usuário"
+      }
+    }
+  },
+  "homePage_planPrompt": "Qual é o seu plano para hoje?",
+  "@homePage_planPrompt": {
+    "description": "Texto de incentivo abaixo da saudação"
+  },
+  "homePage_sectionWorkoutTitle": "Meus Treinos",
+  "@homePage_sectionWorkoutTitle": {
+    "description": "Título da seção de treinos"
+  },
+  "homePage_sectionExercisesTitle": "Meus Exercícios",
+  "@homePage_sectionExercisesTitle": {
+    "description": "Título da seção de exercícios"
+  },
+  "homePage_searchHint": "Buscar Aqui",
+  "@homePage_searchHint": {
+    "description": "Texto de dica no campo de busca"
+  },
+  "homePage_tabWorkout": "Treinos",
+  "@homePage_tabWorkout": {
+    "description": "Nome da aba de treinos"
+  },
+  "homePage_tabExercises": "Exercícios",
+  "@homePage_tabExercises": {
+    "description": "Nome da aba de exercícios"
+  },
+  "homePage_errorLoadingMessage": "Falha ao carregar os dados. Verifique sua conexão.",
+  "@homePage_errorLoadingMessage": {
+    "description": "Mensagem exibida quando ocorre falha ao carregar dados"
+  },
+  "exerciseSection_titleTraining": "Treinamento",
+  "@exerciseSection_titleTraining": {
+    "description": "Título da seção exibido acima da lista de modalidades"
+  },
+  "exerciseSection_clearFilterButton": "Limpar Filtro",
+  "@exerciseSection_clearFilterButton": {
+    "description": "Botão para limpar o filtro de modalidade selecionado"
+  },
+  "exerciseSection_titleExercises": "Exercícios",
+  "@exerciseSection_titleExercises": {
+    "description": "Título da seção exibido acima da lista de exercícios"
+  },
+  "exerciseSection_noExercisesFound": "Nenhum exercício encontrado.",
+  "@exerciseSection_noExercisesFound": {
+    "description": "Mensagem exibida quando nenhum exercício corresponde à busca"
+  },
+  "exerciseSection_setsLabel": "Séries",
+  "@exerciseSection_setsLabel": {
+    "description": "Rótulo para o número de séries no card do exercício"
+  },
+  "exerciseSection_repsLabel": "Repetições",
+  "@exerciseSection_repsLabel": {
+    "description": "Rótulo para o número de repetições no card do exercício"
+  },
+  "exerciseSection_restLabel": "Descanso",
+  "@exerciseSection_restLabel": {
+    "description": "Rótulo para o tempo de descanso no card do exercício"
+  },
+  "workoutDetail_descriptionSectionTitle": "Descrição",
+  "@workoutDetail_descriptionSectionTitle": {
+    "description": "Título da seção de descrição do treino"
+  },
+  "workoutDetail_durationLabel": "Duração",
+  "@workoutDetail_durationLabel": {
+    "description": "Rótulo para a informação de duração do treino"
+  },
+  "workoutDetail_caloriesLabel": "Calorias",
+  "@workoutDetail_caloriesLabel": {
+    "description": "Rótulo para a informação de calorias do treino"
+  },
+  "workoutDetail_daysLabel": "Dias de treino",
+  "@workoutDetail_daysLabel": {
+    "description": "Rótulo para o número de dias do treino"
+  },
+  "workoutDetail_directExercisesTitle": "Exercícios diretos",
+  "@workoutDetail_directExercisesTitle": {
+    "description": "Título da lista de exercícios diretamente associados ao treino"
+  },
+  "workoutDetail_routinesTitle": "Rotinas",
+  "@workoutDetail_routinesTitle": {
+    "description": "Título da lista de rotinas incluídas no treino"
+  },
+  "workoutDetail_routineExercisesLabel": "Exercícios: {preview}",
+  "@workoutDetail_routineExercisesLabel": {
+    "description": "Rótulo mostrando os nomes dos exercícios da rotina",
+    "placeholders": {
+      "preview": {
+        "type": "String",
+        "example": "Flexão, Abdominal"
+      }
+    }
+  },
+  "workoutDetail_routineTimeLabel": "Tempo: {duration}",
+  "@workoutDetail_routineTimeLabel": {
+    "description": "Rótulo para a duração total da rotina",
+    "placeholders": {
+      "duration": {
+        "type": "String",
+        "example": "45min"
+      }
+    }
+  },
+  "workoutDetail_routineCaloriesLabel": "Calorias: {kcal} kcal",
+  "@workoutDetail_routineCaloriesLabel": {
+    "description": "Rótulo para o total de calorias queimadas na rotina",
+    "placeholders": {
+      "kcal": {
+        "type": "String",
+        "example": "300"
+      }
+    }
+  },
+  "workoutDetail_durationUndefined": "Não definida",
+  "@workoutDetail_durationUndefined": {
+    "description": "Texto exibido quando a duração não está definida"
+  },
+  "routineDetail_durationLabel": "Duração",
+  "@routineDetail_durationLabel": {
+    "description": "Rótulo para a duração total da rotina"
+  },
+  "routineDetail_caloriesLabel": "Calorias",
+  "@routineDetail_caloriesLabel": {
+    "description": "Rótulo para as calorias totais da rotina"
+  },
+  "routineDetail_caloriesValue": "{kcal} kcal",
+  "@routineDetail_caloriesValue": {
+    "description": "Texto formatado para as calorias queimadas",
+    "placeholders": {
+      "kcal": {
+        "type": "String",
+        "example": "250"
+      }
+    }
+  },
+  "routineDetail_descriptionTitle": "Descrição",
+  "@routineDetail_descriptionTitle": {
+    "description": "Título da seção de descrição"
+  },
+  "routineDetail_exerciseTitle": "Exercícios",
+  "@routineDetail_exerciseTitle": {
+    "description": "Título da seção de exercícios da rotina"
+  },
+  "routineDetail_noExercises": "Nenhum exercício encontrado.",
+  "@routineDetail_noExercises": {
+    "description": "Mensagem exibida quando não há exercícios na rotina"
+  },
+  "exerciseDetail_pageTitle": "Exercício",
+  "@exerciseDetail_pageTitle": {
+    "description": "Título na AppBar da página de detalhes do exercício"
+  },
+  "exerciseDetail_labelDuration": "Duração",
+  "@exerciseDetail_labelDuration": {
+    "description": "Rótulo para a duração do exercício"
+  },
+  "exerciseDetail_labelCalories": "Calorias",
+  "@exerciseDetail_labelCalories": {
+    "description": "Rótulo para calorias gastas durante o exercício"
+  },
+  "exerciseDetail_labelEquipment": "Equipamento",
+  "@exerciseDetail_labelEquipment": {
+    "description": "Rótulo para equipamento utilizado"
+  },
+  "exerciseDetail_labelBodyPart": "Parte do corpo",
+  "@exerciseDetail_labelBodyPart": {
+    "description": "Rótulo para parte do corpo trabalhada"
+  },
+  "exerciseDetail_equipmentNone": "Nenhum",
+  "@exerciseDetail_equipmentNone": {
+    "description": "Exibido quando nenhum equipamento é necessário"
+  },
+  "exerciseDetail_bodyPartNotSpecified": "Não especificado",
+  "@exerciseDetail_bodyPartNotSpecified": {
+    "description": "Exibido quando a parte do corpo não está definida"
+  },
+  "exerciseDetail_sectionDescription": "Descrição",
+  "@exerciseDetail_sectionDescription": {
+    "description": "Título da seção de descrição"
+  },
+  "exerciseDetail_sectionSteps": "Passos",
+  "@exerciseDetail_sectionSteps": {
+    "description": "Título da seção de execução do exercício"
+  },
+  "exerciseDetail_sectionIndicatedFor": "Indicado para",
+  "@exerciseDetail_sectionIndicatedFor": {
+    "description": "Título da seção de público recomendado"
+  },
+  "exerciseDetail_sectionSafetyTips": "Dicas de segurança",
+  "@exerciseDetail_sectionSafetyTips": {
+    "description": "Título da seção de dicas de segurança"
+  },
+  "exerciseDetail_sectionMistakes": "Erros comuns",
+  "@exerciseDetail_sectionMistakes": {
+    "description": "Título da seção de erros frequentes"
+  },
+  "exerciseDetail_sectionContraindications": "Contraindicações",
+  "@exerciseDetail_sectionContraindications": {
+    "description": "Título da seção de contraindicações"
+  },
+  "settingsPage_changeLanguage": "Alterar Idioma",
+  "@settingsPage_changeLanguage": {
+    "description": "Rótulo da opção para alterar o idioma do aplicativo"
+  },
+  "languagePicker_title": "Selecionar Idioma",
+  "@languagePicker_title": {
+    "description": "Título da página ou diálogo onde o usuário seleciona o idioma"
+  },
+  "languagePicker_english": "Inglês",
+  "@languagePicker_english": {
+    "description": "Rótulo para a opção de idioma inglês"
+  },
+  "languagePicker_portuguese": "Português",
+  "@languagePicker_portuguese": {
+    "description": "Rótulo para a opção de idioma português"
+  },
+  "mainNavigation_labelHome": "Início",
+  "@mainNavigation_labelHome": {
+    "description": "Rótulo para a aba Início"
+  },
+  "mainNavigation_labelAnalytics": "Análises",
+  "@mainNavigation_labelAnalytics": {
+    "description": "Rótulo para a aba de Análises"
+  },
+  "mainNavigation_labelProfile": "Perfil",
+  "@mainNavigation_labelProfile": {
+    "description": "Rótulo para a aba de Perfil"
+  }
+}

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../providers/auth_provider.dart';
 import '../../providers/exercise_provider.dart';
@@ -14,6 +15,11 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = context.watch<UserProvider>().user;
+    final local = AppLocalizations.of(context)!;
+
+    if (user == null) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
 
     return Scaffold(
       backgroundColor: const Color(0xFF0B0622),
@@ -22,9 +28,9 @@ class ProfileScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              const Text(
-                "Profile",
-                style: TextStyle(
+              Text(
+                local.profilePage_title,
+                style: const TextStyle(
                   fontSize: 26,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
@@ -41,7 +47,7 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(height: 15),
 
               Text(
-                user?.name ?? "User",
+                user.name,
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -51,7 +57,7 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(height: 5),
 
               Text(
-                user?.email ?? "email@example.com",
+                user.email,
                 style: const TextStyle(fontSize: 14, color: Colors.white70),
               ),
 
@@ -59,17 +65,17 @@ class ProfileScreen extends StatelessWidget {
 
               ProfileOption(
                 icon: Icons.edit_note,
-                label: "Edit Profile",
+                label: local.profilePage_editProfile,
                 onTap: () => Navigator.pushNamed(context, '/edit-profile'),
               ),
               ProfileOption(
                 icon: Icons.settings,
-                label: "Settings",
+                label: local.profilePage_settings,
                 onTap: () => Navigator.pushNamed(context, '/settings'),
               ),
               ProfileOption(
                 icon: Icons.logout,
-                label: "Log Out",
+                label: local.profilePage_logout,
                 onTap: () => _signOut(context),
               ),
             ],
@@ -80,44 +86,26 @@ class ProfileScreen extends StatelessWidget {
   }
 
   void _signOut(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
+
     showDialog(
       context: context,
       builder:
           (context) => AlertDialog(
-            title: const Text('Log Out'),
-            content: const Text('Are you sure you want to log out?'),
+            title: Text(local.profilePage_logoutDialogTitle),
+            content: Text(local.profilePage_logoutDialogMessage),
             actions: [
               TextButton(
                 onPressed: () async {
-                  final authProvider = Provider.of<AuthProvider>(
-                    context,
-                    listen: false,
-                  );
-                  final userProvider = Provider.of<UserProvider>(
-                    context,
-                    listen: false,
-                  );
-                  final exerciseProvider = Provider.of<ExerciseProvider>(
-                    context,
-                    listen: false,
-                  );
-                  final modalityProvider = Provider.of<ModalityProvider>(
-                    context,
-                    listen: false,
-                  );
+                  Navigator.pop(context); // fecha o dialog
 
-                  await authProvider.logout();
-                  userProvider.clear();
-                  exerciseProvider.clear();
-                  modalityProvider.clear();
+                  context.read<UserProvider>().clear();
+                  context.read<ExerciseProvider>().clear();
+                  context.read<ModalityProvider>().clear();
 
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    '/login',
-                    (route) => false,
-                  );
+                  await context.read<AuthProvider>().logout();
                 },
-                child: const Text('Confirm'),
+                child: Text(local.profilePage_logoutConfirmButton),
               ),
             ],
           ),

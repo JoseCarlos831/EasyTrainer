@@ -1,11 +1,11 @@
 // lib/src/screens/private/home/exercise_section.dart
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-import '../../../providers/auth_provider.dart';
-import '../../../providers/modality_provider.dart';
 import '../../../providers/exercise_provider.dart';
+import '../../../providers/modality_provider.dart';
 import '../../../models/exercise_model.dart';
 import '../details/exercise_detail_page.dart';
 
@@ -21,31 +21,30 @@ class ExerciseSection extends StatefulWidget {
 class _ExerciseSectionState extends State<ExerciseSection> {
   int? _selectedModalityId;
 
-  bool _modalitiesLoaded = false;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    if (_modalitiesLoaded) return;
-
-    final exerciseProvider = context.read<ExerciseProvider>();
-    final modalityProvider = context.read<ModalityProvider>();
-    final token = context.read<AuthProvider>().token;
-
-    final allExercises = exerciseProvider.allExercises;
-    final usedModalityIds = allExercises.expand((e) => e.modalityIds).toSet();
-
-    if (token != null) {
-      modalityProvider.fetchMissingModalities(usedModalityIds.toList(), token);
-      _modalitiesLoaded = true;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    final allModalities = context.watch<ModalityProvider>().modalities;
+    final local = AppLocalizations.of(context)!;
     final exerciseProvider = context.watch<ExerciseProvider>();
+    final allExercises = exerciseProvider.allExercises;
+
+    final allModalities = context.watch<ModalityProvider>().modalities;
+    final Set<int> usedModalityIds =
+        allExercises.expand((e) => e.modalityIds).toSet();
+    final modalities =
+        allModalities.where((m) => usedModalityIds.contains(m.id)).toList();
+
+    final List<ExerciseModel> filteredExercises =
+        (_selectedModalityId != null
+                ? allExercises.where(
+                  (e) => e.modalityIds.contains(_selectedModalityId!),
+                )
+                : allExercises)
+            .where(
+              (e) => e.name.toLowerCase().contains(
+                widget.searchQuery.toLowerCase(),
+              ),
+            )
+            .toList();
 
     final Map<String, IconData> modalityIcons = {
       'Yoga': Icons.self_improvement,
@@ -60,31 +59,13 @@ class _ExerciseSectionState extends State<ExerciseSection> {
       'Rehabilitation': Icons.healing,
     };
 
-    final allExercises = exerciseProvider.allExercises;
-    final Set<int> usedModalityIds =
-        allExercises.expand((e) => e.modalityIds).toSet();
-    final modalities =
-        allModalities.where((mod) => usedModalityIds.contains(mod.id)).toList();
-    final List<ExerciseModel> filteredExercises =
-        (_selectedModalityId != null
-                ? allExercises.where(
-                  (e) => e.modalityIds.contains(_selectedModalityId!),
-                )
-                : allExercises)
-            .where(
-              (e) => e.name.toLowerCase().contains(
-                widget.searchQuery.toLowerCase(),
-              ),
-            )
-            .toList();
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 24),
-        const Text(
-          "Training",
-          style: TextStyle(
+        Text(
+          local.exerciseSection_titleTraining,
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -98,15 +79,11 @@ class _ExerciseSectionState extends State<ExerciseSection> {
             child: Align(
               alignment: Alignment.centerRight,
               child: TextButton.icon(
-                onPressed: () {
-                  setState(() {
-                    _selectedModalityId = null;
-                  });
-                },
+                onPressed: () => setState(() => _selectedModalityId = null),
                 icon: const Icon(Icons.clear, color: Colors.tealAccent),
-                label: const Text(
-                  'Clear Filter',
-                  style: TextStyle(color: Colors.tealAccent),
+                label: Text(
+                  local.exerciseSection_clearFilterButton,
+                  style: const TextStyle(color: Colors.tealAccent),
                 ),
               ),
             ),
@@ -123,11 +100,11 @@ class _ExerciseSectionState extends State<ExerciseSection> {
               final isSelected = modality.id == _selectedModalityId;
 
               return GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _selectedModalityId = isSelected ? null : modality.id;
-                  });
-                },
+                onTap:
+                    () => setState(
+                      () =>
+                          _selectedModalityId = isSelected ? null : modality.id,
+                    ),
                 child: Column(
                   children: [
                     CircleAvatar(
@@ -156,9 +133,9 @@ class _ExerciseSectionState extends State<ExerciseSection> {
         ),
 
         const SizedBox(height: 20),
-        const Text(
-          "Exercises",
-          style: TextStyle(
+        Text(
+          local.exerciseSection_titleExercises,
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -167,10 +144,10 @@ class _ExerciseSectionState extends State<ExerciseSection> {
         const SizedBox(height: 12),
 
         if (filteredExercises.isEmpty)
-          const Center(
+          Center(
             child: Text(
-              "No exercises found.",
-              style: TextStyle(color: Colors.white70),
+              local.exerciseSection_noExercisesFound,
+              style: const TextStyle(color: Colors.white70),
             ),
           )
         else
@@ -180,21 +157,21 @@ class _ExerciseSectionState extends State<ExerciseSection> {
   }
 
   Widget _exerciseCard(ExerciseModel ex) {
-    final List<String> fallbackImages = [
+    final local = AppLocalizations.of(context)!;
+
+    final fallbackImages = [
       'assets/imagem/meghan-holmes-wy_L8W0zcpI-unsplash.jpg',
       'assets/imagem/victor-freitas-hOuJYX2K5DA-unsplash.jpg',
       'assets/imagem/danielle-cerullo-CQfNt66ttZM-unsplash.jpg',
     ];
-
-    final String imagePath = ex.imageUrl ?? (fallbackImages..shuffle()).first;
+    final imagePath = ex.imageUrl ?? (fallbackImages..shuffle()).first;
 
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => ExerciseDetailPage(exercise: ex)),
-        );
-      },
+      onTap:
+          () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => ExerciseDetailPage(exercise: ex)),
+          ),
       child: Container(
         margin: const EdgeInsets.only(bottom: 16),
         padding: const EdgeInsets.all(16),
@@ -226,12 +203,16 @@ class _ExerciseSectionState extends State<ExerciseSection> {
             const SizedBox(height: 8),
             Row(
               children: [
-                if (ex.sets != null) _infoText("Sets", '${ex.sets}x'),
+                if (ex.sets != null)
+                  _infoText(local.exerciseSection_setsLabel, '${ex.sets}x'),
                 if (ex.repetition != null)
-                  _infoText("Reps", '${ex.repetition}'),
+                  _infoText(
+                    local.exerciseSection_repsLabel,
+                    '${ex.repetition}',
+                  ),
                 if (ex.restTime != null)
                   _infoText(
-                    "Rest",
+                    local.exerciseSection_restLabel,
                     "${ex.restTime!.inMinutes}:${(ex.restTime!.inSeconds % 60).toString().padLeft(2, '0')} min",
                   ),
               ],

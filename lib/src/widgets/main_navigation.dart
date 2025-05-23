@@ -1,4 +1,7 @@
+// lib/src/widgets/main_navigation.dart
+
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../screens/private/home/home_page.dart';
 import '../screens/private/analytics_page.dart';
@@ -14,20 +17,31 @@ class MainNavigation extends StatefulWidget {
 class _MainNavigationState extends State<MainNavigation> {
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = [
-    HomePage(),
-    AnalyticsPage(), 
-    ProfileScreen(),
+  final List<Widget> _pages = const [
+    HomePage(key: PageStorageKey('home')),
+    AnalyticsPage(key: PageStorageKey('analytics')),
+    ProfileScreen(key: PageStorageKey('profile')),
   ];
-
-  final List<String> _labels = ["Home", "Analytics", "Profile"];
-  final List<IconData> _icons = [Icons.home, Icons.analytics_outlined, Icons.person];
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
+
+    final List<String> labels = [
+      local.mainNavigation_labelHome,
+      local.mainNavigation_labelAnalytics,
+      local.mainNavigation_labelProfile,
+    ];
+
+    final List<IconData> icons = [
+      Icons.home,
+      Icons.analytics_outlined,
+      Icons.person,
+    ];
+
     return Scaffold(
       backgroundColor: const Color(0xFF0B0622),
-      body: _pages[_selectedIndex],
+      body: IndexedStack(index: _selectedIndex, children: _pages),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16),
         child: Container(
@@ -42,29 +56,34 @@ class _MainNavigationState extends State<MainNavigation> {
             children: List.generate(3, (index) {
               final bool isSelected = index == _selectedIndex;
               return GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _selectedIndex = index;
-                  });
-                },
+                onTap: () => setState(() => _selectedIndex = index),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 10,
+                  ),
                   decoration: BoxDecoration(
-                    color: isSelected ? Colors.tealAccent.withOpacity(0.1) : Colors.transparent,
+                    color:
+                        isSelected
+                            ? Colors.tealAccent.withOpacity(0.1)
+                            : Colors.transparent,
                     borderRadius: BorderRadius.circular(30),
-                    border: isSelected
-                        ? Border.all(color: Colors.tealAccent)
-                        : Border.all(color: Colors.transparent),
+                    border: Border.all(
+                      color:
+                          isSelected ? Colors.tealAccent : Colors.transparent,
+                    ),
                   ),
                   child: Row(
                     children: [
-                      Icon(_icons[index],
-                          color: isSelected ? Colors.tealAccent : Colors.white),
+                      Icon(
+                        icons[index],
+                        color: isSelected ? Colors.tealAccent : Colors.white,
+                      ),
                       if (isSelected) ...[
                         const SizedBox(width: 8),
                         Text(
-                          _labels[index],
+                          labels[index],
                           style: const TextStyle(color: Colors.tealAccent),
                         ),
                       ],

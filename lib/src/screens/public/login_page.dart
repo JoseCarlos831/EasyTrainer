@@ -1,11 +1,11 @@
 // lib/src/screens/public/login_page.dart
-
 import 'package:flutter/material.dart';
-import 'package:personalapp/src/widgets/social_login_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 
 import '../../providers/auth_provider.dart';
+import '../../widgets/social_login_button.dart';
 import '../../widgets/password_text_field.dart';
 
 class LoginPage extends StatefulWidget {
@@ -29,6 +29,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -42,42 +44,109 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox(
-                      height: 60,
-                    ), // dá espaço pro backButton e scroll
+                    const SizedBox(height: 60),
                     _backButton(),
                     const SizedBox(height: 20),
-                    _welcomeText(),
+                    Text(
+                      local.loginPage_welcomeMessage,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 34,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     const SizedBox(height: 30),
-
                     _textField(
-                      "Enter your email",
+                      local.loginPage_emailHint,
                       controller: _emailController,
                     ),
                     const SizedBox(height: 20),
                     PasswordTextField(
-                      hintText: "Enter your password",
+                      hintText: local.loginPage_passwordHint,
                       controller: _passwordController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
+                          return local.loginPage_validatorPasswordRequired;
                         }
                         return null;
                       },
                     ),
                     const SizedBox(height: 20),
-                    _forgotPasswordLink(),
+                    TextButton(
+                      onPressed: () => Navigator.pushNamed(context, '/forgot'),
+                      child: Text(
+                        local.loginPage_forgotPasswordLink,
+                        style: const TextStyle(color: Colors.lightBlueAccent),
+                      ),
+                    ),
                     const SizedBox(height: 20),
-                    _signInButton(),
+                    ElevatedButton(
+                      onPressed: () async {
+                        if (!_formKey.currentState!.validate()) return;
+
+                        final authProvider = Provider.of<AuthProvider>(
+                          context,
+                          listen: false,
+                        );
+                        final success = await authProvider.login(
+                          _emailController.text.trim(),
+                          _passwordController.text,
+                          role: 'user',
+                        );
+
+                        if (!mounted) return;
+                        if (success) {
+                          Navigator.pushReplacementNamed(
+                            context,
+                            '/initializing',
+                          );
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueAccent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        minimumSize: const Size(double.infinity, 50),
+                      ),
+                      child: Text(
+                        local.loginPage_signInButton,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                     const SizedBox(height: 20),
-                    const Text(
-                      "Or Login with",
-                      style: TextStyle(color: Colors.white70),
+                    Text(
+                      local.loginPage_orLoginWith,
+                      style: const TextStyle(color: Colors.white70),
                     ),
                     const SizedBox(height: 10),
                     _socialButtons(),
                     const SizedBox(height: 20),
-                    _registerLink(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          local.loginPage_registerPrompt,
+                          style: const TextStyle(color: Colors.white70),
+                        ),
+                        TextButton(
+                          onPressed:
+                              () => Navigator.pushNamed(context, '/register'),
+                          child: Text(
+                            local.loginPage_registerNowLink,
+                            style: const TextStyle(
+                              color: Colors.lightBlueAccent,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -112,21 +181,9 @@ class _LoginPageState extends State<LoginPage> {
           if (Navigator.of(context).canPop()) {
             Navigator.of(context).pop();
           } else {
-            SystemNavigator.pop(); // fecha o app
+            SystemNavigator.pop();
           }
         },
-      ),
-    );
-  }
-
-  Widget _welcomeText() {
-    return const Text(
-      "Welcome back!\nGlad to see you, Again!",
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        color: Colors.white,
-        fontSize: 34,
-        fontWeight: FontWeight.bold,
       ),
     );
   }
@@ -136,20 +193,20 @@ class _LoginPageState extends State<LoginPage> {
     bool obscure = false,
     required TextEditingController controller,
   }) {
+    final local = AppLocalizations.of(context)!;
+
     return TextFormField(
       controller: controller,
       obscureText: obscure,
       style: const TextStyle(color: Colors.white),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please enter $hint';
+          return local.loginPage_validatorFieldRequired(hint);
         }
-
         if (hint.toLowerCase().contains("email") &&
             !RegExp(r'^[\w\.-]+@[\w\.-]+\.\w{2,4}$').hasMatch(value)) {
-          return 'Enter a valid email';
+          return local.loginPage_validatorEmailInvalid;
         }
-
         return null;
       },
       decoration: InputDecoration(
@@ -169,57 +226,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _forgotPasswordLink() {
-    return TextButton(
-      onPressed: () => Navigator.pushNamed(context, '/forgot'),
-      child: const Text(
-        "Forgot Password?",
-        style: TextStyle(color: Colors.lightBlueAccent),
-      ),
-    );
-  }
-
-  Widget _signInButton() {
-    return ElevatedButton(
-      onPressed: () async {
-        if (!_formKey.currentState!.validate()) return;
-
-        final authProvider = Provider.of<AuthProvider>(context, listen: false);
-        final success = await authProvider.login(
-          _emailController.text.trim(),
-          _passwordController.text,
-          role: 'user',
-          context: context,
-        );
-
-        if (!mounted) return;
-
-        if (success) {
-          Navigator.pushNamedAndRemoveUntil(context, '/main', (_) => false);
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Invalid email or password. Please try again.'),
-            ),
-          );
-        }
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.blueAccent,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        minimumSize: const Size(double.infinity, 50),
-      ),
-      child: const Text(
-        "Sign in",
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
-  }
-
   Widget _socialButtons() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -229,28 +235,6 @@ class _LoginPageState extends State<LoginPage> {
         SocialLoginButton(icon: Icons.g_mobiledata, color: Colors.white),
         SizedBox(width: 15),
         SocialLoginButton(icon: Icons.apple, color: Colors.white),
-      ],
-    );
-  }
-
-  Widget _registerLink() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text(
-          "Don't have an account?",
-          style: TextStyle(color: Colors.white70),
-        ),
-        TextButton(
-          onPressed: () => Navigator.pushNamed(context, '/register'),
-          child: const Text(
-            "Register Now",
-            style: TextStyle(
-              color: Colors.lightBlueAccent,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
       ],
     );
   }

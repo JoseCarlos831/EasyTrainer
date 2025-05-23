@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../providers/auth_provider.dart';
 import '../../providers/user_provider.dart';
@@ -91,6 +92,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   Future<void> _pickImage() async {
+    final local = AppLocalizations.of(context)!;
     final source = await showModalBottomSheet<ImageSource>(
       context: context,
       builder:
@@ -99,12 +101,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
             children: [
               ListTile(
                 leading: const Icon(Icons.camera_alt),
-                title: const Text("Camera"),
+                title: Text(local.editProfilePage_cameraOption),
                 onTap: () => Navigator.pop(ctx, ImageSource.camera),
               ),
               ListTile(
                 leading: const Icon(Icons.image),
-                title: const Text("Gallery"),
+                title: Text(local.editProfilePage_galleryOption),
                 onTap: () => Navigator.pop(ctx, ImageSource.gallery),
               ),
             ],
@@ -115,14 +117,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
       final pickedFile = await ImagePicker().pickImage(source: source);
       if (pickedFile != null) {
         setState(() => _profileImage = File(pickedFile.path));
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text("Image uploaded.")));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(local.editProfilePage_imageUploadedSnackbar)),
+        );
       }
     }
   }
 
   Future<void> _submit() async {
+    final local = AppLocalizations.of(context)!;
+
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
 
@@ -151,13 +155,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Profile updated successfully!')),
+          SnackBar(content: Text(local.editProfilePage_successSnackbar)),
         );
         Navigator.pop(context);
       } else {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to update profile.')),
+          SnackBar(content: Text(local.editProfilePage_errorSnackbar)),
         );
       }
 
@@ -167,6 +171,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: const Color(0xFF0B0622),
       body: SafeArea(
@@ -180,11 +186,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     key: _formKey,
                     child: Column(
                       children: [
-                        _buildHeader(),
+                        _buildHeader(local),
                         const SizedBox(height: 30),
                         _buildAvatar(),
                         const SizedBox(height: 30),
-                        _buildFormFields(),
+                        _buildFormFields(local),
                         const SizedBox(height: 40),
                         SizedBox(
                           width: double.infinity,
@@ -202,9 +208,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     ? const CircularProgressIndicator(
                                       color: Colors.tealAccent,
                                     )
-                                    : const Text(
-                                      "Update Profile",
-                                      style: TextStyle(
+                                    : Text(
+                                      local.editProfilePage_updateButton,
+                                      style: const TextStyle(
                                         color: Colors.tealAccent,
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
@@ -222,7 +228,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(AppLocalizations local) {
     return Column(
       children: [
         Align(
@@ -237,9 +243,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
           ),
         ),
         const SizedBox(height: 10),
-        const Text(
-          "Edit Profile",
-          style: TextStyle(
+        Text(
+          local.editProfilePage_title,
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 26,
             fontWeight: FontWeight.bold,
@@ -282,33 +288,36 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  Widget _buildFormFields() {
+  Widget _buildFormFields(AppLocalizations local) {
     return Column(
       children: [
-        _buildTextField("Full Name", controller: _nameController),
+        _buildTextField(
+          local.editProfilePage_fullNameLabel,
+          controller: _nameController,
+        ),
         const SizedBox(height: 20),
         _buildTextField(
-          "Email",
+          local.editProfilePage_emailLabel,
           controller: _emailController,
           keyboardType: TextInputType.emailAddress,
         ),
         const SizedBox(height: 20),
         _buildTextField(
-          "Phone Number",
+          local.editProfilePage_phoneLabel,
           controller: _phoneController,
           keyboardType: TextInputType.phone,
         ),
         const SizedBox(height: 20),
-        _buildDateField(),
+        _buildDateField(local),
         const SizedBox(height: 20),
         _buildTextField(
-          "Weight (kg)",
+          local.editProfilePage_weightLabel,
           controller: _weightController,
           keyboardType: TextInputType.number,
         ),
         const SizedBox(height: 20),
         _buildTextField(
-          "Height (cm)",
+          local.editProfilePage_heightLabel,
           controller: _heightController,
           keyboardType: TextInputType.number,
         ),
@@ -330,14 +339,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  Widget _buildDateField() {
+  Widget _buildDateField(AppLocalizations local) {
     return TextFormField(
       controller: _dateController,
       readOnly: true,
       onTap: _selectDate,
       style: const TextStyle(color: Colors.white),
       decoration: _inputDecoration(
-        "Date of Birth",
+        local.editProfilePage_birthdateLabel,
         suffixIcon: const Icon(Icons.calendar_today, color: Colors.tealAccent),
       ),
       validator: (value) => null,

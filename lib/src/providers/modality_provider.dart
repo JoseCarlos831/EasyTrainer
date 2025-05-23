@@ -46,6 +46,10 @@ class ModalityProvider with ChangeNotifier {
       }
     }
 
-    notifyListeners();
+    if (missingIds.isNotEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        notifyListeners();
+      });
+    }
   }
 }

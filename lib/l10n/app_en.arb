@@ -1,0 +1,657 @@
+{
+  "@@locale": "en",
+  "welcomePage_title": "WELCOME TO\nEASY TRAINER",
+  "@welcomePage_title": {
+    "description": "Main headline text on the WelcomePage"
+  },
+  "welcomePage_subtitle": "Become the best version of yourself with our fitness app!",
+  "@welcomePage_subtitle": {
+    "description": "Motivational subtitle under the title on the WelcomePage"
+  },
+  "welcomePage_signInButton": "Sign in",
+  "@welcomePage_signInButton": {
+    "description": "Label of the button that navigates to the login screen on the WelcomePage"
+  },
+  "successPage_title": "Password Changed!",
+  "@successPage_title": {
+    "description": "Headline confirming password change"
+  },
+  "successPage_description": "Your password has been changed successfully.",
+  "@successPage_description": {
+    "description": "Confirmation message below the title"
+  },
+  "successPage_backToLoginButton": "Back To Login",
+  "@successPage_backToLoginButton": {
+    "description": "Label of the button that navigates to the login screen"
+  },
+  "registerPage_title": "Sign up",
+  "@registerPage_title": {
+    "description": "Title on the register screen"
+  },
+  "registerPage_usernameHint": "Username",
+  "@registerPage_usernameHint": {
+    "description": "Hint text for username input"
+  },
+  "registerPage_emailHint": "Email",
+  "@registerPage_emailHint": {
+    "description": "Hint text for email input"
+  },
+  "registerPage_passwordHint": "Password",
+  "@registerPage_passwordHint": {
+    "description": "Hint text for password input"
+  },
+  "registerPage_confirmPasswordHint": "Confirm password",
+  "@registerPage_confirmPasswordHint": {
+    "description": "Hint text for confirming password input"
+  },
+  "registerPage_submitButton": "Agree and Register",
+  "@registerPage_submitButton": {
+    "description": "Label for the registration submit button"
+  },
+  "registerPage_socialLoginLabel": "Or Login with",
+  "@registerPage_socialLoginLabel": {
+    "description": "Label shown above the social login buttons"
+  },
+  "registerPage_validatorRequired": "Enter {field}",
+  "@registerPage_validatorRequired": {
+    "description": "Validation message when a field is empty; use {field} as the field name",
+    "placeholders": {
+      "field": {
+        "type": "String",
+        "example": "email"
+      }
+    }
+  },
+  "registerPage_validatorPasswordsMatch": "Passwords do not match",
+  "@registerPage_validatorPasswordsMatch": {
+    "description": "Validation message when password and confirmation do not match"
+  },
+  "loginPage_welcomeMessage": "Welcome back!\nGlad to see you, Again!",
+  "@loginPage_welcomeMessage": {
+    "description": "Main welcome message on the login screen"
+  },
+  "loginPage_emailHint": "Enter your email",
+  "@loginPage_emailHint": {
+    "description": "Hint text for email input"
+  },
+  "loginPage_passwordHint": "Enter your password",
+  "@loginPage_passwordHint": {
+    "description": "Hint text for password input"
+  },
+  "loginPage_validatorPasswordRequired": "Please enter your password",
+  "@loginPage_validatorPasswordRequired": {
+    "description": "Validation message when password field is empty"
+  },
+  "loginPage_validatorFieldRequired": "Please enter {field}",
+  "@loginPage_validatorFieldRequired": {
+    "description": "Validation message when a general field is empty",
+    "placeholders": {
+      "field": {
+        "type": "String",
+        "example": "username"
+      }
+    }
+  },
+  "loginPage_validatorEmailInvalid": "Enter a valid email",
+  "@loginPage_validatorEmailInvalid": {
+    "description": "Validation message when the email format is invalid"
+  },
+  "loginPage_forgotPasswordLink": "Forgot Password?",
+  "@loginPage_forgotPasswordLink": {
+    "description": "Text for forgot password link"
+  },
+  "loginPage_signInButton": "Sign in",
+  "@loginPage_signInButton": {
+    "description": "Label for the login button"
+  },
+  "loginPage_orLoginWith": "Or Login with",
+  "@loginPage_orLoginWith": {
+    "description": "Label above social login options"
+  },
+  "loginPage_registerPrompt": "Don't have an account?",
+  "@loginPage_registerPrompt": {
+    "description": "Prompt before the register link"
+  },
+  "loginPage_registerNowLink": "Register Now",
+  "@loginPage_registerNowLink": {
+    "description": "Text for the register link"
+  },
+  "forgotPasswordPage_title": "Forgot Password?",
+  "@forgotPasswordPage_title": {
+    "description": "Title on the forgot password screen"
+  },
+  "forgotPasswordPage_subtitle": "Don't worry! It occurs. Please enter the email address linked with your account.",
+  "@forgotPasswordPage_subtitle": {
+    "description": "Instructional text on the forgot password screen"
+  },
+  "forgotPasswordPage_emailHint": "Enter your email",
+  "@forgotPasswordPage_emailHint": {
+    "description": "Hint text for the email input field"
+  },
+  "forgotPasswordPage_continueButton": "Continue",
+  "@forgotPasswordPage_continueButton": {
+    "description": "Label of the button that triggers password recovery"
+  },
+  "forgotPasswordPage_rememberPrompt": "Remember Password?",
+  "@forgotPasswordPage_rememberPrompt": {
+    "description": "Prompt before the login link"
+  },
+  "forgotPasswordPage_loginButton": "Login",
+  "@forgotPasswordPage_loginButton": {
+    "description": "Text for the login button/link"
+  },
+  "forgotPasswordPage_invalidEmailFeedback": "Please enter a valid email.",
+  "@forgotPasswordPage_invalidEmailFeedback": {
+    "description": "Snackbar feedback when email is invalid"
+  },
+  "forgotPasswordPage_successFeedback": "Recovery instructions sent to your email.",
+  "@forgotPasswordPage_successFeedback": {
+    "description": "Snackbar feedback when recovery email is sent"
+  },
+  "verifyEmailPage_title": "Check your Email",
+  "@verifyEmailPage_title": {
+    "description": "Title for the verify email screen"
+  },
+  "verifyEmailPage_instruction": "Enter the verification code we just sent on your email address.",
+  "@verifyEmailPage_instruction": {
+    "description": "Instruction text for the user to enter the code sent by email"
+  },
+  "verifyEmailPage_continueButton": "Continue",
+  "@verifyEmailPage_continueButton": {
+    "description": "Label for the button to verify the code"
+  },
+  "verifyEmailPage_resendPrompt": "Didn't receive code?",
+  "@verifyEmailPage_resendPrompt": {
+    "description": "Prompt before the resend code link"
+  },
+  "verifyEmailPage_resendLink": "Resend",
+  "@verifyEmailPage_resendLink": {
+    "description": "Link to resend the verification code"
+  },
+  "settingsPage_title": "Settings",
+  "@settingsPage_title": {
+    "description": "Title of the settings screen"
+  },
+  "settingsPage_updatePassword": "Update Password",
+  "@settingsPage_updatePassword": {
+    "description": "Label for the option to update the user's password"
+  },
+  "settingsPage_deleteAccount": "Delete Account",
+  "@settingsPage_deleteAccount": {
+    "description": "Label for the option to delete the user's account"
+  },
+  "resetPasswordPage_title": "Check your Email",
+  "@resetPasswordPage_title": {
+    "description": "Title shown at the top of the reset password screen"
+  },
+  "resetPasswordPage_instruction": "Enter the verification code we just sent on your email address.",
+  "@resetPasswordPage_instruction": {
+    "description": "Instruction shown under the title on the reset password screen"
+  },
+  "resetPasswordPage_newPasswordHint": "New Password",
+  "@resetPasswordPage_newPasswordHint": {
+    "description": "Hint for the new password input field"
+  },
+  "resetPasswordPage_confirmPasswordHint": "Confirm Password",
+  "@resetPasswordPage_confirmPasswordHint": {
+    "description": "Hint for the confirm password input field"
+  },
+  "resetPasswordPage_resetButton": "Reset Password",
+  "@resetPasswordPage_resetButton": {
+    "description": "Label for the button that submits the password reset"
+  },
+  "resetPasswordPage_passwordMismatch": "Passwords do not match",
+  "@resetPasswordPage_passwordMismatch": {
+    "description": "Message shown when password and confirmation do not match"
+  },
+  "profilePage_title": "Profile",
+  "@profilePage_title": {
+    "description": "Title of the profile screen"
+  },
+  "profilePage_editProfile": "Edit Profile",
+  "@profilePage_editProfile": {
+    "description": "Label for the edit profile option"
+  },
+  "profilePage_settings": "Settings",
+  "@profilePage_settings": {
+    "description": "Label for the settings option"
+  },
+  "profilePage_logout": "Log Out",
+  "@profilePage_logout": {
+    "description": "Label for the logout option"
+  },
+  "profilePage_logoutDialogTitle": "Log Out",
+  "@profilePage_logoutDialogTitle": {
+    "description": "Title of the logout confirmation dialog"
+  },
+  "profilePage_logoutDialogMessage": "Are you sure you want to log out?",
+  "@profilePage_logoutDialogMessage": {
+    "description": "Message in the logout confirmation dialog"
+  },
+  "profilePage_logoutConfirmButton": "Confirm",
+  "@profilePage_logoutConfirmButton": {
+    "description": "Text on the confirm button in logout dialog"
+  },
+  "passwordSettingsPage_title": "Update Password",
+  "@passwordSettingsPage_title": {
+    "description": "Title of the password settings screen"
+  },
+  "passwordSettingsPage_currentPassword": "Current Password",
+  "@passwordSettingsPage_currentPassword": {
+    "description": "Hint for the current password input"
+  },
+  "passwordSettingsPage_forgotPasswordLink": "Forgot your password?",
+  "@passwordSettingsPage_forgotPasswordLink": {
+    "description": "Text for the forgot password link"
+  },
+  "passwordSettingsPage_newPassword": "New Password",
+  "@passwordSettingsPage_newPassword": {
+    "description": "Hint for the new password input"
+  },
+  "passwordSettingsPage_confirmNewPassword": "Confirm New Password",
+  "@passwordSettingsPage_confirmNewPassword": {
+    "description": "Hint for the confirm new password input"
+  },
+  "passwordSettingsPage_updateButton": "Update Password",
+  "@passwordSettingsPage_updateButton": {
+    "description": "Label for the update password button"
+  },
+  "passwordSettingsPage_mismatchError": "New passwords do not match",
+  "@passwordSettingsPage_mismatchError": {
+    "description": "Error message shown when the two new passwords do not match"
+  },
+  "passwordSettingsPage_successMessage": "Password changed successfully!",
+  "@passwordSettingsPage_successMessage": {
+    "description": "Snackbar message shown when password change is successful"
+  },
+  "passwordSettingsPage_errorMessage": "Failed to change password.",
+  "@passwordSettingsPage_errorMessage": {
+    "description": "Snackbar message shown when password change fails"
+  },
+  "editProfilePage_title": "Edit Profile",
+  "@editProfilePage_title": {
+    "description": "Title of the edit profile screen"
+  },
+  "editProfilePage_fullNameLabel": "Full Name",
+  "@editProfilePage_fullNameLabel": {
+    "description": "Label for full name input"
+  },
+  "editProfilePage_emailLabel": "Email",
+  "@editProfilePage_emailLabel": {
+    "description": "Label for email input"
+  },
+  "editProfilePage_phoneLabel": "Phone Number",
+  "@editProfilePage_phoneLabel": {
+    "description": "Label for phone input"
+  },
+  "editProfilePage_birthdateLabel": "Date of Birth",
+  "@editProfilePage_birthdateLabel": {
+    "description": "Label for birthdate input"
+  },
+  "editProfilePage_weightLabel": "Weight (kg)",
+  "@editProfilePage_weightLabel": {
+    "description": "Label for weight input"
+  },
+  "editProfilePage_heightLabel": "Height (cm)",
+  "@editProfilePage_heightLabel": {
+    "description": "Label for height input"
+  },
+  "editProfilePage_cameraOption": "Camera",
+  "@editProfilePage_cameraOption": {
+    "description": "Option to select image from camera"
+  },
+  "editProfilePage_galleryOption": "Gallery",
+  "@editProfilePage_galleryOption": {
+    "description": "Option to select image from gallery"
+  },
+  "editProfilePage_imageUploadedSnackbar": "Image uploaded.",
+  "@editProfilePage_imageUploadedSnackbar": {
+    "description": "Snackbar message after uploading an image"
+  },
+  "editProfilePage_updateButton": "Update Profile",
+  "@editProfilePage_updateButton": {
+    "description": "Button label to submit profile updates"
+  },
+  "editProfilePage_successSnackbar": "Profile updated successfully!",
+  "@editProfilePage_successSnackbar": {
+    "description": "Snackbar message after successful profile update"
+  },
+  "editProfilePage_errorSnackbar": "Failed to update profile.",
+  "@editProfilePage_errorSnackbar": {
+    "description": "Snackbar message after failed profile update"
+  },
+  "deleteAccountPage_title": "Delete Account",
+  "@deleteAccountPage_title": {
+    "description": "Title on the delete account screen"
+  },
+  "deleteAccountPage_warningText": "Deleting your account will permanently remove all your data.\nThis action cannot be undone.",
+  "@deleteAccountPage_warningText": {
+    "description": "Warning message on the delete account screen"
+  },
+  "deleteAccountPage_deleteMyAccountButton": "Delete My Account",
+  "@deleteAccountPage_deleteMyAccountButton": {
+    "description": "Button to initiate account deletion"
+  },
+  "deleteAccountPage_cancelButton": "Cancel",
+  "@deleteAccountPage_cancelButton": {
+    "description": "Label for cancel buttons"
+  },
+  "deleteAccountPage_modalTitle": "Delete your account?",
+  "@deleteAccountPage_modalTitle": {
+    "description": "Title of the modal confirmation dialog"
+  },
+  "deleteAccountPage_modalDescription": "This action is permanent and cannot be undone.\nPlease confirm by typing your full name.",
+  "@deleteAccountPage_modalDescription": {
+    "description": "Instructional text inside the confirmation modal"
+  },
+  "deleteAccountPage_fullNameInputLabel": "Your full name",
+  "@deleteAccountPage_fullNameInputLabel": {
+    "description": "Label for the input field to confirm user's name"
+  },
+  "deleteAccountPage_modalDeleteButton": "Delete",
+  "@deleteAccountPage_modalDeleteButton": {
+    "description": "Button inside the confirmation modal to delete account"
+  },
+  "deleteAccountPage_successSnackbar": "Account deleted successfully",
+  "@deleteAccountPage_successSnackbar": {
+    "description": "Snackbar message on successful account deletion"
+  },
+  "deleteAccountPage_errorSnackbar": "Failed to delete account",
+  "@deleteAccountPage_errorSnackbar": {
+    "description": "Snackbar message on failed account deletion"
+  },
+  "analyticsPage_title": "Upload a file",
+  "@analyticsPage_title": {
+    "description": "Title of the analytics upload screen"
+  },
+  "analyticsPage_description": "Regulations require you to upload a national identity card. Don't worry, your data will stay safe and private.",
+  "@analyticsPage_description": {
+    "description": "Instructional description below the title"
+  },
+  "analyticsPage_selectFileLabel": "Select file",
+  "@analyticsPage_selectFileLabel": {
+    "description": "Label shown when no file has been selected"
+  },
+  "analyticsPage_orSeparator": "or",
+  "@analyticsPage_orSeparator": {
+    "description": "Separator text between file and camera options"
+  },
+  "analyticsPage_openCameraButton": "Open Camera & Take Photo",
+  "@analyticsPage_openCameraButton": {
+    "description": "Button label to open the camera and take a photo"
+  },
+  "analyticsPage_continueButton": "Continue",
+  "@analyticsPage_continueButton": {
+    "description": "Label for the continue button"
+  },
+  "analyticsPage_successSnackbar": "File uploaded successfully!",
+  "@analyticsPage_successSnackbar": {
+    "description": "Snackbar message after uploading a file"
+  },
+  "analyticsPage_filePrefix": "File:",
+  "@analyticsPage_filePrefix": {
+    "description": "Prefix for displaying the selected file name"
+  },
+  "workoutSection_noWorkoutsFound": "No workouts found.",
+  "@workoutSection_noWorkoutsFound": {
+    "description": "Message shown when no workouts match the search query"
+  },
+  "workoutSection_progressZero": "0%",
+  "@workoutSection_progressZero": {
+    "description": "Placeholder text inside circular progress indicator"
+  },
+  "homePage_notificationsTitle": "Notifications",
+  "@homePage_notificationsTitle": {
+    "description": "Title of the notifications bottom sheet"
+  },
+  "homePage_notificationWorkoutTitle": "New Workout",
+  "@homePage_notificationWorkoutTitle": {
+    "description": "Title of the notification about a new workout"
+  },
+  "homePage_notificationWorkoutBody": "Your back workout was updated",
+  "@homePage_notificationWorkoutBody": {
+    "description": "Body text of the workout update notification"
+  },
+  "homePage_notificationGoalTitle": "Goal Achieved!",
+  "@homePage_notificationGoalTitle": {
+    "description": "Title of the notification for achieving a goal"
+  },
+  "homePage_notificationGoalBody": "You've completed 80% of your workouts this week.",
+  "@homePage_notificationGoalBody": {
+    "description": "Body text for the goal achievement notification"
+  },
+  "homePage_greeting": "Hi, {name}",
+  "@homePage_greeting": {
+    "description": "Greeting the user by name",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "user's name"
+      }
+    }
+  },
+  "homePage_planPrompt": "What's your plan for today?",
+  "@homePage_planPrompt": {
+    "description": "Prompt shown below the user's name"
+  },
+  "homePage_sectionWorkoutTitle": "My Workout",
+  "@homePage_sectionWorkoutTitle": {
+    "description": "Title for the workout section"
+  },
+  "homePage_sectionExercisesTitle": "My Exercises",
+  "@homePage_sectionExercisesTitle": {
+    "description": "Title for the exercises section"
+  },
+  "homePage_searchHint": "Search Here",
+  "@homePage_searchHint": {
+    "description": "Hint text in the search input field"
+  },
+  "homePage_tabWorkout": "Workout",
+  "@homePage_tabWorkout": {
+    "description": "Label of the workout tab"
+  },
+  "homePage_tabExercises": "Exercises",
+  "@homePage_tabExercises": {
+    "description": "Label of the exercises tab"
+  },
+  "homePage_errorLoadingMessage": "Failed to load data. Check your connection.",
+  "@homePage_errorLoadingMessage": {
+    "description": "Displayed when the FutureBuilder fails to load data"
+  },
+  "exerciseSection_titleTraining": "Training",
+  "@exerciseSection_titleTraining": {
+    "description": "Section title displayed above the list of modalities"
+  },
+  "exerciseSection_clearFilterButton": "Clear Filter",
+  "@exerciseSection_clearFilterButton": {
+    "description": "Button to clear selected modality filter"
+  },
+  "exerciseSection_titleExercises": "Exercises",
+  "@exerciseSection_titleExercises": {
+    "description": "Section title displayed above the list of exercises"
+  },
+  "exerciseSection_noExercisesFound": "No exercises found.",
+  "@exerciseSection_noExercisesFound": {
+    "description": "Displayed when no exercises match the search criteria"
+  },
+  "exerciseSection_setsLabel": "Sets",
+  "@exerciseSection_setsLabel": {
+    "description": "Label for the number of sets in the exercise card"
+  },
+  "exerciseSection_repsLabel": "Reps",
+  "@exerciseSection_repsLabel": {
+    "description": "Label for the number of repetitions in the exercise card"
+  },
+  "exerciseSection_restLabel": "Rest",
+  "@exerciseSection_restLabel": {
+    "description": "Label for rest time in the exercise card"
+  },
+  "workoutDetail_descriptionSectionTitle": "Description",
+  "@workoutDetail_descriptionSectionTitle": {
+    "description": "Title of the workout description section"
+  },
+  "workoutDetail_durationLabel": "Duration",
+  "@workoutDetail_durationLabel": {
+    "description": "Label for the workout duration info"
+  },
+  "workoutDetail_caloriesLabel": "Calories",
+  "@workoutDetail_caloriesLabel": {
+    "description": "Label for the workout calories info"
+  },
+  "workoutDetail_daysLabel": "Workout days",
+  "@workoutDetail_daysLabel": {
+    "description": "Label for the number of workout days"
+  },
+  "workoutDetail_directExercisesTitle": "Direct exercises",
+  "@workoutDetail_directExercisesTitle": {
+    "description": "Title for the list of exercises directly associated with the workout"
+  },
+  "workoutDetail_routinesTitle": "Routines",
+  "@workoutDetail_routinesTitle": {
+    "description": "Title for the list of routines included in the workout"
+  },
+  "workoutDetail_routineExercisesLabel": "Exercises: {preview}",
+  "@workoutDetail_routineExercisesLabel": {
+    "description": "Label showing the exercise names for the routine",
+    "placeholders": {
+      "preview": {
+        "type": "String",
+        "example": "Push Up, Sit Up"
+      }
+    }
+  },
+  "workoutDetail_routineTimeLabel": "Time: {duration}",
+  "@workoutDetail_routineTimeLabel": {
+    "description": "Label for the total duration of the routine",
+    "placeholders": {
+      "duration": {
+        "type": "String",
+        "example": "45m"
+      }
+    }
+  },
+  "workoutDetail_routineCaloriesLabel": "Calories: {kcal} kcal",
+  "@workoutDetail_routineCaloriesLabel": {
+    "description": "Label for total calories burned in the routine",
+    "placeholders": {
+      "kcal": {
+        "type": "String",
+        "example": "300"
+      }
+    }
+  },
+  "workoutDetail_durationUndefined": "Undefined",
+  "@workoutDetail_durationUndefined": {
+    "description": "Label shown when a duration is not defined"
+  },
+  "routineDetail_durationLabel": "Duration",
+  "@routineDetail_durationLabel": {
+    "description": "Label for the total duration of the routine"
+  },
+  "routineDetail_caloriesLabel": "Calories",
+  "@routineDetail_caloriesLabel": {
+    "description": "Label for the total calories of the routine"
+  },
+  "routineDetail_caloriesValue": "{kcal} kcal",
+  "@routineDetail_caloriesValue": {
+    "description": "Formatted string for calories burned",
+    "placeholders": {
+      "kcal": {
+        "type": "String",
+        "example": "250"
+      }
+    }
+  },
+  "routineDetail_descriptionTitle": "Description",
+  "@routineDetail_descriptionTitle": {
+    "description": "Section title for the description block"
+  },
+  "routineDetail_exerciseTitle": "Exercises",
+  "@routineDetail_exerciseTitle": {
+    "description": "Section title for the list of exercises in the routine"
+  },
+  "routineDetail_noExercises": "No exercises found.",
+  "@routineDetail_noExercises": {
+    "description": "Message displayed when the routine has no exercises"
+  },
+  "exerciseDetail_pageTitle": "Exercise",
+  "@exerciseDetail_pageTitle": {
+    "description": "Title in the AppBar for the exercise detail page"
+  },
+  "exerciseDetail_labelDuration": "Duration",
+  "@exerciseDetail_labelDuration": {
+    "description": "Label for exercise duration"
+  },
+  "exerciseDetail_labelCalories": "Calories",
+  "@exerciseDetail_labelCalories": {
+    "description": "Label for calories burned during exercise"
+  },
+  "exerciseDetail_labelEquipment": "Equipment",
+  "@exerciseDetail_labelEquipment": {
+    "description": "Label for equipment used in exercise"
+  },
+  "exerciseDetail_labelBodyPart": "Body part",
+  "@exerciseDetail_labelBodyPart": {
+    "description": "Label for the body part targeted by the exercise"
+  },
+  "exerciseDetail_equipmentNone": "None",
+  "@exerciseDetail_equipmentNone": {
+    "description": "Displayed when no equipment is required"
+  },
+  "exerciseDetail_bodyPartNotSpecified": "Not specified",
+  "@exerciseDetail_bodyPartNotSpecified": {
+    "description": "Displayed when no body part is defined"
+  },
+  "exerciseDetail_sectionDescription": "Description",
+  "@exerciseDetail_sectionDescription": {
+    "description": "Section title for description"
+  },
+  "exerciseDetail_sectionSteps": "Steps",
+  "@exerciseDetail_sectionSteps": {
+    "description": "Section title for exercise execution steps"
+  },
+  "exerciseDetail_sectionIndicatedFor": "Indicated for",
+  "@exerciseDetail_sectionIndicatedFor": {
+    "description": "Section title for recommended audience"
+  },
+  "exerciseDetail_sectionSafetyTips": "Safety tips",
+  "@exerciseDetail_sectionSafetyTips": {
+    "description": "Section title for safety tips"
+  },
+  "exerciseDetail_sectionMistakes": "Common mistakes",
+  "@exerciseDetail_sectionMistakes": {
+    "description": "Section title for common mistakes"
+  },
+  "exerciseDetail_sectionContraindications": "Contraindications",
+  "@exerciseDetail_sectionContraindications": {
+    "description": "Section title for contraindications"
+  },
+  "settingsPage_changeLanguage": "Change Language",
+  "@settingsPage_changeLanguage": {
+    "description": "Label for the option to change the app language"
+  },
+  "languagePicker_title": "Select Language",
+  "@languagePicker_title": {
+    "description": "Title of the page or dialog where the user selects the language"
+  },
+  "languagePicker_english": "English",
+  "@languagePicker_english": {
+    "description": "Label for the English language option"
+  },
+  "languagePicker_portuguese": "Portuguese",
+  "@languagePicker_portuguese": {
+    "description": "Label for the Portuguese language option"
+  },
+  "mainNavigation_labelHome": "Home",
+  "@mainNavigation_labelHome": {
+    "description": "Label for the Home tab"
+  },
+  "mainNavigation_labelAnalytics": "Analytics",
+  "@mainNavigation_labelAnalytics": {
+    "description": "Label for the Analytics tab"
+  },
+  "mainNavigation_labelProfile": "Profile",
+  "@mainNavigation_labelProfile": {
+    "description": "Label for the Profile tab"
+  }
+}

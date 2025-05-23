@@ -1,9 +1,9 @@
 // lib/src/screens/private/home/workout_section.dart
 
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../models/workout_model.dart';
 import '../../../providers/workout_provider.dart';
@@ -14,7 +14,7 @@ class WorkoutSection extends StatelessWidget {
 
   const WorkoutSection({super.key, required this.searchQuery});
 
-  final List<String> _workoutImages = const [
+  static const _workoutImages = [
     'assets/imagem/meghan-holmes-wy_L8W0zcpI-unsplash.jpg',
     'assets/imagem/victor-freitas-hOuJYX2K5DA-unsplash.jpg',
     'assets/imagem/victor-freitas-WvDYdXDzkhs-unsplash.jpg',
@@ -22,10 +22,17 @@ class WorkoutSection extends StatelessWidget {
     'assets/imagem/scott-webb-U5kQvbQWoG0-unsplash.jpg',
   ];
 
+  String _randomWorkoutImage() {
+    final random = Random();
+    return _workoutImages[random.nextInt(_workoutImages.length)];
+  }
+
   @override
   Widget build(BuildContext context) {
-    final workouts = context.watch<WorkoutProvider>().userWorkouts;
-    final isLoading = context.watch<WorkoutProvider>().isLoading;
+    final provider = context.watch<WorkoutProvider>();
+    final workouts = provider.userWorkouts;
+    final isLoading = provider.isLoading;
+    final local = AppLocalizations.of(context)!;
 
     if (isLoading) {
       return const Center(child: CircularProgressIndicator());
@@ -39,12 +46,12 @@ class WorkoutSection extends StatelessWidget {
             .toList();
 
     if (filteredWorkouts.isEmpty) {
-      return const Padding(
-        padding: EdgeInsets.symmetric(vertical: 24),
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 24),
         child: Center(
           child: Text(
-            "No workouts found.",
-            style: TextStyle(
+            local.workoutSection_noWorkoutsFound,
+            style: const TextStyle(
               color: Colors.white70,
               fontSize: 16,
               fontStyle: FontStyle.italic,
@@ -57,40 +64,29 @@ class WorkoutSection extends StatelessWidget {
 
     return Column(
       children:
-          filteredWorkouts.map((workout) {
-            return _workoutCard(
-              context: context,
-              workout: workout,
-              title: workout.name,
-              subtitle: workout.description,
-              progress: 0.0,
-            );
-          }).toList(),
+          filteredWorkouts.map((w) => _workoutCard(context, w, local)).toList(),
     );
   }
 
-  Widget _workoutCard({
-    required String title,
-    required String subtitle,
-    required double progress,
-    required BuildContext context,
-    required WorkoutModel workout,
-  }) {
-    final random = Random();
-    final imagePath = _workoutImages[random.nextInt(_workoutImages.length)];
+  Widget _workoutCard(
+    BuildContext context,
+    WorkoutModel workout,
+    AppLocalizations local,
+  ) {
+    final imagePath = _randomWorkoutImage();
 
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => WorkoutDetailPage(workout: workout),
+      onTap:
+          () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => WorkoutDetailPage(workout: workout),
+            ),
           ),
-        );
-      },
       child: Container(
         margin: const EdgeInsets.only(bottom: 16),
         decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
           image: DecorationImage(
             image: AssetImage(imagePath),
             fit: BoxFit.cover,
@@ -99,54 +95,51 @@ class WorkoutSection extends StatelessWidget {
               BlendMode.darken,
             ),
           ),
-          borderRadius: BorderRadius.circular(16),
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    workout.name,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      subtitle,
-                      style: const TextStyle(color: Colors.white70),
-                    ),
-                    const SizedBox(height: 12),
-                    Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        const SizedBox(
-                          width: 40,
-                          height: 40,
-                          child: CircularProgressIndicator(
-                            value: 0.0,
-                            backgroundColor: Colors.white24,
-                            valueColor: AlwaysStoppedAnimation(
-                              Colors.tealAccent,
-                            ),
-                            strokeWidth: 4,
-                          ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    workout.description,
+                    style: const TextStyle(color: Colors.white70),
+                  ),
+                  const SizedBox(height: 12),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      const SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: CircularProgressIndicator(
+                          value: 0.0,
+                          backgroundColor: Colors.white24,
+                          valueColor: AlwaysStoppedAnimation(Colors.tealAccent),
+                          strokeWidth: 4,
                         ),
-                        const Text('0%', style: TextStyle(color: Colors.white)),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                      Text(
+                        local.workoutSection_progressZero,
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

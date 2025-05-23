@@ -3,10 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../providers/auth_provider.dart';
 import '../../../providers/exercise_provider.dart';
 import '../../../providers/modality_provider.dart';
+import '../../../providers/user_provider.dart';
 import '../../../providers/workout_provider.dart';
 
 import 'exercise_section.dart';
@@ -32,6 +34,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool _redirected = false;
+  bool _ready = false;
+
   late Future<void> _initialLoadFuture;
   int _selectedTab = 0;
   int _selectedDay = 0;
@@ -42,15 +47,24 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _initialLoadFuture = _loadInitialData();
+
     _days = List.generate(7, (index) {
       final date = DateTime.now().add(Duration(days: index));
       return DateFormat('E dd').format(date);
     });
+
+    _initialLoadFuture = _loadInitialData().then((_) {
+      if (mounted) {
+        setState(() {
+          _ready = true;
+        });
+      }
+    });
   }
 
   void _showNotifications() async {
-    final notifications = await _mockNotifications();
+    final local = AppLocalizations.of(context)!;
+    final notifications = await _mockNotifications(local);
 
     if (!mounted) return;
 
@@ -66,9 +80,9 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
-                  "Notifications",
-                  style: TextStyle(
+                Text(
+                  local.homePage_notificationsTitle,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -100,17 +114,19 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Future<List<AppNotification>> _mockNotifications() async {
+  Future<List<AppNotification>> _mockNotifications(
+    AppLocalizations local,
+  ) async {
     await Future.delayed(const Duration(milliseconds: 600));
     return [
       AppNotification(
-        title: 'New Workout',
-        body: 'Your back workout was updated',
+        title: local.homePage_notificationWorkoutTitle,
+        body: local.homePage_notificationWorkoutBody,
         date: DateTime.now(),
       ),
       AppNotification(
-        title: 'Goal Achieved!',
-        body: "You've completed 80% of your workouts this week.",
+        title: local.homePage_notificationGoalTitle,
+        body: local.homePage_notificationGoalBody,
         date: DateTime.now(),
       ),
     ];
@@ -126,13 +142,9 @@ class _HomePageState extends State<HomePage> {
     final token = auth.token;
 
     if (userId != null && token != null) {
-      print('[HomePage] Carregando workouts e modalities para userId=$userId');
-
-      // Carrega primeiro os dados principais
       await workoutProvider.fetchUserWorkouts(userId, token);
       await modalityProvider.fetchModalities(token);
 
-      // Agora carrega os exercícios associados
       for (final workout in workoutProvider.userWorkouts) {
         final workoutId = workout.id;
         final instructorId = workout.instructorId;
@@ -143,17 +155,48 @@ class _HomePageState extends State<HomePage> {
             instructorId,
             token,
           );
-        } else {
-          print(
-            '[HomePage] Workout inválido — id: $workoutId, instructorId: $instructorId',
-          );
         }
+      }
+
+      final allExercises = exerciseProvider.allExercises;
+      final usedModalityIds = allExercises.expand((e) => e.modalityIds).toSet();
+
+      if (usedModalityIds.isNotEmpty) {
+        await modalityProvider.fetchMissingModalities(
+          usedModalityIds.toList(),
+          token,
+        );
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
+    final user = context.watch<UserProvider>().user;
+
+    if (!_ready) {
+      return const Scaffold(
+        backgroundColor: Color(0xFF0B0622),
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (user == null && !_redirected) {
+      _redirected = true;
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          Navigator.pushReplacementNamed(context, '/login');
+        }
+      });
+
+      return const Scaffold(
+        backgroundColor: Color(0xFF0B0622),
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
     return Scaffold(
       backgroundColor: const Color(0xFF0B0622),
       body: SafeArea(
@@ -165,10 +208,10 @@ class _HomePageState extends State<HomePage> {
             }
 
             if (snapshot.hasError) {
-              return const Center(
+              return Center(
                 child: Text(
-                  'Failed to load data. Check your connection.',
-                  style: TextStyle(color: Colors.redAccent),
+                  local.homePage_errorLoadingMessage,
+                  style: const TextStyle(color: Colors.redAccent),
                 ),
               );
             }
@@ -178,19 +221,25 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildHeader(),
+                  _buildHeader(local),
                   const SizedBox(height: 20),
-                  _buildDynamicTitle(),
+                  _buildDynamicTitle(local),
                   const SizedBox(height: 20),
-                  _buildSearchBar(),
+                  _buildSearchBar(local),
                   const SizedBox(height: 20),
-                  _buildTabs(),
+                  _buildTabs(local),
                   const SizedBox(height: 20),
                   _buildDaysSelector(),
                   const SizedBox(height: 20),
                   _selectedTab == 0
-                      ? WorkoutSection(searchQuery: _searchQuery)
-                      : ExerciseSection(searchQuery: _searchQuery),
+                      ? WorkoutSection(
+                        key: const PageStorageKey('workout_section'),
+                        searchQuery: _searchQuery,
+                      )
+                      : ExerciseSection(
+                        key: const PageStorageKey('exercise_section'),
+                        searchQuery: _searchQuery,
+                      ),
                 ],
               ),
             );
@@ -200,7 +249,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(AppLocalizations local) {
     final user = context.watch<AuthProvider>().userData;
     final name = user?['name'] ?? 'User';
     return Row(
@@ -218,7 +267,7 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Hi, $name',
+                  local.homePage_greeting(name),
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -226,8 +275,8 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Text(
-                  "What's your plan for today?",
-                  style: TextStyle(color: Colors.white70, fontSize: 14),
+                  local.homePage_planPrompt,
+                  style: const TextStyle(color: Colors.white70, fontSize: 14),
                 ),
               ],
             ),
@@ -241,8 +290,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildDynamicTitle() {
-    final title = _selectedTab == 0 ? "My Workout" : "My Exercises";
+  Widget _buildDynamicTitle(AppLocalizations local) {
+    final title =
+        _selectedTab == 0
+            ? local.homePage_sectionWorkoutTitle
+            : local.homePage_sectionExercisesTitle;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Text(
@@ -256,7 +308,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildSearchBar() {
+  Widget _buildSearchBar(AppLocalizations local) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
@@ -270,16 +322,12 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: TextField(
               style: const TextStyle(color: Colors.white),
-              decoration: const InputDecoration(
-                hintText: "Search Here",
-                hintStyle: TextStyle(color: Colors.white38),
+              decoration: InputDecoration(
+                hintText: local.homePage_searchHint,
+                hintStyle: const TextStyle(color: Colors.white38),
                 border: InputBorder.none,
               ),
-              onChanged: (value) {
-                setState(() {
-                  _searchQuery = value;
-                });
-              },
+              onChanged: (value) => setState(() => _searchQuery = value),
             ),
           ),
           const Icon(Icons.filter_list, color: Colors.white70),
@@ -288,13 +336,13 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildTabs() {
+  Widget _buildTabs(AppLocalizations local) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _tabItem(0, Icons.fitness_center, "Workout"),
+        _tabItem(0, Icons.fitness_center, local.homePage_tabWorkout),
         const SizedBox(width: 20),
-        _tabItem(1, Icons.event_note, "Exercises"),
+        _tabItem(1, Icons.event_note, local.homePage_tabExercises),
       ],
     );
   }

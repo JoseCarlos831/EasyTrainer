@@ -1,4 +1,7 @@
+// lib/src/screens/private/reset_password.dart
+
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   const ResetPasswordPage({super.key});
@@ -14,9 +17,11 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   bool _obscureConfirm = true;
 
   void _resetPassword() {
+    final local = AppLocalizations.of(context)!;
+
     if (_passwordController.text != _confirmController.text) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Passwords do not match")),
+        SnackBar(content: Text(local.resetPasswordPage_passwordMismatch)),
       );
       return;
     }
@@ -29,14 +34,15 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
+
     return Scaffold(
       body: Stack(
         children: [
-          // Fundo
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/imagem/TelaLogin.png'),
+                image: const AssetImage('assets/imagem/TelaLogin.png'),
                 fit: BoxFit.cover,
                 colorFilter: ColorFilter.mode(
                   Colors.black.withOpacity(0.5),
@@ -45,43 +51,51 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               ),
             ),
           ),
-
-          // Conteúdo
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ListView(
                 children: [
-                  // Botão de voltar
                   Align(
                     alignment: Alignment.centerLeft,
                     child: IconButton(
-                      icon: Icon(Icons.arrow_back, color: Colors.white, size: 30),
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                        size: 30,
+                      ),
                       onPressed: () => Navigator.pop(context),
                     ),
                   ),
-                  SizedBox(height: 30),
-
+                  const SizedBox(height: 30),
                   Text(
-                    "Check your Email",
-                    style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+                    local.resetPasswordPage_title,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
-                    "Enter the verification code we just sent on your email address.",
-                    style: TextStyle(color: Colors.white70),
+                    local.resetPasswordPage_instruction,
+                    style: const TextStyle(color: Colors.white70),
                   ),
-                  SizedBox(height: 30),
-
-                  _buildPasswordField("New Password", _passwordController, _obscurePassword, () {
-                    setState(() => _obscurePassword = !_obscurePassword);
-                  }),
-                  SizedBox(height: 20),
-                  _buildPasswordField("Confirm Password", _confirmController, _obscureConfirm, () {
-                    setState(() => _obscureConfirm = !_obscureConfirm);
-                  }),
-                  SizedBox(height: 30),
-
+                  const SizedBox(height: 30),
+                  _buildPasswordField(
+                    local.resetPasswordPage_newPasswordHint,
+                    _passwordController,
+                    _obscurePassword,
+                    () => setState(() => _obscurePassword = !_obscurePassword),
+                  ),
+                  const SizedBox(height: 20),
+                  _buildPasswordField(
+                    local.resetPasswordPage_confirmPasswordHint,
+                    _confirmController,
+                    _obscureConfirm,
+                    () => setState(() => _obscureConfirm = !_obscureConfirm),
+                  ),
+                  const SizedBox(height: 30),
                   SizedBox(
                     width: double.infinity,
                     height: 50,
@@ -93,7 +107,14 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                           borderRadius: BorderRadius.circular(30),
                         ),
                       ),
-                      child: Text("Reset Password", style: TextStyle(color: Colors.white ,fontSize: 16, fontWeight: FontWeight.bold)),
+                      child: Text(
+                        local.resetPasswordPage_resetButton,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -105,14 +126,19 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     );
   }
 
-  Widget _buildPasswordField(String hint, TextEditingController controller, bool obscure, VoidCallback toggle) {
+  Widget _buildPasswordField(
+    String hint,
+    TextEditingController controller,
+    bool obscure,
+    VoidCallback toggle,
+  ) {
     return TextField(
       controller: controller,
       obscureText: obscure,
-      style: TextStyle(color: Colors.white),
+      style: const TextStyle(color: Colors.white),
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: TextStyle(color: Colors.white70),
+        hintStyle: const TextStyle(color: Colors.white70),
         filled: true,
         fillColor: Colors.white.withOpacity(0.2),
         border: OutlineInputBorder(
