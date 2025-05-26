@@ -3,7 +3,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:personalapp/l10n/app_localizations.dart';
+
 
 import '../../../models/workout_model.dart';
 import '../../../models/exercise_model.dart';
@@ -307,8 +308,9 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
   }
 
   String _formatDuration(Duration? duration) {
-    if (duration == null)
+    if (duration == null) {
       return AppLocalizations.of(context)!.workoutDetail_durationUndefined;
+    }
     final hours = duration.inHours;
     final minutes = duration.inMinutes.remainder(60);
     return hours > 0 ? "${hours}h ${minutes}m" : "${minutes}m";

@@ -2,7 +2,8 @@
 
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:personalapp/l10n/app_localizations.dart';
+
 
 import '../../../models/exercise_model.dart';
 
@@ -109,8 +110,9 @@ class ExerciseDetailPage extends StatelessWidget {
   }
 
   Widget _section(String title, String? content) {
-    if (content == null || content.trim().isEmpty)
+    if (content == null || content.trim().isEmpty) {
       return const SizedBox.shrink();
+    }
 
     return Padding(
       padding: const EdgeInsets.only(top: 12),

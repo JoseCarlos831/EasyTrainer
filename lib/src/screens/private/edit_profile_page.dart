@@ -5,7 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:personalapp/l10n/app_localizations.dart';
+
 
 import '../../providers/auth_provider.dart';
 import '../../providers/user_provider.dart';

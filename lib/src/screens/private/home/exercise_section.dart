@@ -1,7 +1,8 @@
 // lib/src/screens/private/home/exercise_section.dart
 
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:personalapp/l10n/app_localizations.dart';
+
 import 'package:provider/provider.dart';
 
 import '../../../providers/exercise_provider.dart';
@@ -151,7 +152,7 @@ class _ExerciseSectionState extends State<ExerciseSection> {
             ),
           )
         else
-          ...filteredExercises.map(_exerciseCard).toList(),
+          ...filteredExercises.map(_exerciseCard),
       ],
     );
   }
