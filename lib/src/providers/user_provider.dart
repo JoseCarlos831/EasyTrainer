@@ -6,6 +6,11 @@ import '../models/user_model.dart';
 import '../services/user_service.dart';
 
 class UserProvider with ChangeNotifier {
+  final UserService _userService;
+
+UserProvider({UserService? userService})
+    : _userService = userService ?? UserService();
+
   UserModel? _user;
   String? _token;
 
@@ -28,7 +33,7 @@ class UserProvider with ChangeNotifier {
     if (_token == null) return false;
 
     try {
-      final success = await UserService().updateUser(updatedUser, _token!);
+      final success = await _userService.updateUser(updatedUser, _token!);
       if (success) {
         _user = updatedUser;
         notifyListeners();
@@ -63,7 +68,7 @@ class UserProvider with ChangeNotifier {
     if (_user == null || _token == null) return false;
 
     try {
-      final success = await UserService().deleteAccount(_user!.id, _token!);
+      final success = await _userService.deleteAccount(_user!.id, _token!);
       if (success) clear();
       return success;
     } catch (e) {
@@ -71,4 +76,6 @@ class UserProvider with ChangeNotifier {
       return false;
     }
   }
+
+  void setToken(String s) {}
 }

@@ -5,7 +5,11 @@ import '../models/routine_model.dart';
 import '../services/routine_service.dart';
 
 class RoutineProvider with ChangeNotifier {
-  final RoutineService _routineService = RoutineService();
+  final RoutineService _routineService;
+  
+  RoutineProvider({RoutineService? routineService})
+    : _routineService = routineService ?? RoutineService();
+
 
   final Map<int, List<RoutineModel>> _routinesByWorkout = {};
   bool _isLoading = false;

@@ -6,7 +6,10 @@ import '../models/modality_model.dart';
 import '../services/modality_service.dart';
 
 class ModalityProvider with ChangeNotifier {
-  final ModalityService _modalityService = ModalityService();
+  final ModalityService _modalityService;
+
+  ModalityProvider({ModalityService? modalityService})
+  : _modalityService = modalityService ?? ModalityService();
 
   List<ModalityModel> _modalities = [];
   bool _isLoading = false;

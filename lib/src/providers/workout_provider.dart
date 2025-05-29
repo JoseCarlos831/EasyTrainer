@@ -5,7 +5,10 @@ import '../models/workout_model.dart';
 import '../services/workout_service.dart';
 
 class WorkoutProvider with ChangeNotifier {
-  final WorkoutService _workoutService = WorkoutService();
+  final WorkoutService _workoutService;
+
+WorkoutProvider({WorkoutService? workoutService})
+    : _workoutService = workoutService ?? WorkoutService();
 
   List<WorkoutModel> _userWorkouts = [];
   bool _isLoading = false;

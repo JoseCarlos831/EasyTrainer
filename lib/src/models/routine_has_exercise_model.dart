@@ -1,5 +1,3 @@
-// lib/models/routine_has_exercise_model.dart
-
 import 'package:json_annotation/json_annotation.dart';
 
 part 'routine_has_exercise_model.g.dart';

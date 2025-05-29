@@ -34,19 +34,26 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
     'assets/imagem/scott-webb-U5kQvbQWoG0-unsplash.jpg',
   ];
 
-  late String imagePath;
+  String? imagePath;
+
 
   @override
-  void initState() {
-    super.initState();
-    final token = context.read<UserProvider>().token!;
+void initState() {
+  super.initState();
+
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    final token = context.read<UserProvider>().token;
     final instructorId = widget.workout.instructorId;
+
+    if (token == null) return; 
 
     final exerciseProvider = context.read<ExerciseProvider>();
     final routineProvider = context.read<RoutineProvider>();
 
     final random = Random();
-    imagePath = _images[random.nextInt(_images.length)];
+    setState(() {
+      imagePath = _images[random.nextInt(_images.length)];
+    });
 
     exerciseProvider.fetchExercisesByWorkoutId(
       widget.workout.id,
@@ -57,18 +64,20 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
     routineProvider
         .fetchRoutinesByWorkoutId(widget.workout.id, instructorId, token)
         .then((_) {
-          final routines = routineProvider.getRoutinesForWorkout(
-            widget.workout.id,
-          );
-          for (final r in routines) {
-            exerciseProvider.fetchExercisesByRoutineId(
-              r.id,
-              instructorId,
-              token,
-            );
-          }
-        });
-  }
+      final routines = routineProvider.getRoutinesForWorkout(
+        widget.workout.id,
+      );
+      for (final r in routines) {
+        exerciseProvider.fetchExercisesByRoutineId(
+          r.id,
+          instructorId,
+          token,
+        );
+      }
+    });
+  });
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -143,12 +152,18 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
   }
 
   Widget _imageHeader() {
+  if (imagePath == null) {
+    return const SizedBox(
+      height: 180,
+      child: Center(child: CircularProgressIndicator()),
+    );
+  }
     return Container(
       height: 180,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         image: DecorationImage(
-          image: AssetImage(imagePath),
+          image: AssetImage(imagePath!),
           fit: BoxFit.cover,
           colorFilter: ColorFilter.mode(
             Colors.black.withOpacity(0.3),

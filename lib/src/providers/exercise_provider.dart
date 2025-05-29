@@ -4,7 +4,11 @@ import '../models/exercise_model.dart';
 import '../services/exercise_service.dart';
 
 class ExerciseProvider with ChangeNotifier {
-  final ExerciseService _exerciseService = ExerciseService();
+  final ExerciseService _exerciseService;
+
+ExerciseProvider({ExerciseService? exerciseService})
+    : _exerciseService = exerciseService ?? ExerciseService();
+
 
   final Map<int, List<ExerciseModel>> _exercisesByWorkout = {};
   final Map<int, List<ExerciseModel>> _exercisesByRoutine = {};
