@@ -1,5 +1,3 @@
-// lib/src/services/workout_service.dart
-
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -7,7 +5,14 @@ import '../config/env.dart';
 import '../models/workout_model.dart';
 
 class WorkoutService {
-  final String _baseUrl = Env.apiBaseUrl;
+  final String _baseUrl;
+  final http.Client httpClient;
+
+  WorkoutService({
+    http.Client? httpClient,
+    String? baseUrl,
+  })  : httpClient = httpClient ?? http.Client(),
+        _baseUrl = baseUrl ?? Env.apiBaseUrl;
 
   Future<List<WorkoutModel>> getWorkoutsByUserId(
     int userId,
@@ -17,7 +22,7 @@ class WorkoutService {
     print('[WorkoutService] Requisição: $url');
 
     try {
-      final response = await http.get(
+      final response = await httpClient.get(
         url,
         headers: {
           'Content-Type': 'application/json',

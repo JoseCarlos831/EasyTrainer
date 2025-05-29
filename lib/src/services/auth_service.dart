@@ -1,15 +1,19 @@
-// lib/src/services/auth_service.dart
-
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../config/env.dart';
 
 enum AccountType { user, instructor }
 
 class AuthService {
-  final String _baseUrl = Env.apiBaseUrl;
+  final String _baseUrl;
+  final http.Client httpClient;
+
+  AuthService({
+    http.Client? httpClient,
+    String? baseUrl,
+  })  : httpClient = httpClient ?? http.Client(),
+        _baseUrl = baseUrl ?? Env.apiBaseUrl;
 
   Future<Map<String, dynamic>?> login(
     String email,
@@ -17,15 +21,12 @@ class AuthService {
     String role,
   ) async {
     final url = Uri.parse('$_baseUrl/auth/login');
-
     try {
-      final response = await http.post(
+      final response = await httpClient.post(
         url,
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'email': email, 'password': password, 'role': role}),
       );
-
-      print('Resposta: ${response.statusCode} - ${response.body}');
 
       if (response.statusCode == 200) {
         return jsonDecode(response.body);
@@ -33,8 +34,36 @@ class AuthService {
     } catch (e) {
       print('Erro durante login: $e');
     }
-
     return null;
+  }
+
+  Future<Map<String, dynamic>> signup(
+    AccountType type,
+    Map<String, dynamic> userData,
+  ) async {
+    final endpoint = type == AccountType.user
+        ? '/auth/register/user/basic'
+        : '/auth/register/instructor/basic';
+    final url = Uri.parse('$_baseUrl$endpoint');
+
+    try {
+      final response = await httpClient.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(userData),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final json = jsonDecode(response.body);
+        return {
+          'success': json['success'] == true,
+          'message': json['message'] ?? 'Erro desconhecido',
+        };
+      }
+    } catch (e) {
+      print('Erro no signup: $e');
+    }
+    return {'success': false, 'message': 'Erro na requisição'};
   }
 
   Future<void> saveToken(String token) async {
@@ -54,39 +83,6 @@ class AuthService {
     return jsonDecode(jsonString);
   }
 
-  Future<Map<String, dynamic>> signup(
-    AccountType type,
-    Map<String, dynamic> userData,
-  ) async {
-    final endpoint =
-        type == AccountType.user
-            ? '/auth/register/user/basic'
-            : '/auth/register/instructor/basic';
-
-    final url = Uri.parse('$_baseUrl$endpoint');
-
-    try {
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(userData),
-      );
-
-      print('Resposta do signup: ${response.statusCode} - ${response.body}');
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        final json = jsonDecode(response.body);
-        final success = json['success'] == true;
-        final message = json['message'] ?? 'Erro desconhecido';
-        return {'success': success, 'message': message};
-      }
-    } catch (e) {
-      print('Erro no signup: $e');
-    }
-
-    return {'success': false, 'message': 'Erro na requisição'};
-  }
-
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
@@ -100,25 +96,18 @@ class AuthService {
 
   Future<bool> validateToken(String token) async {
     final url = Uri.parse('$_baseUrl/auth/validate');
-
     try {
-      final response = await http.get(
+      final response = await httpClient.get(
         url,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
       );
-
       return response.statusCode == 200;
     } catch (e) {
       print('Erro ao validar token: $e');
       return false;
     }
-  }
-
-  Future<bool> isLoggedIn() async {
-    final token = await getToken();
-    return token != null;
   }
 }

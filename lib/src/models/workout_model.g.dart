@@ -16,22 +16,18 @@ WorkoutModel _$WorkoutModelFromJson(Map<String, dynamic> json) => WorkoutModel(
   indoor: json['indoor'] as bool,
   instructorId: (json['instructorId'] as num).toInt(),
   levelId: (json['levelId'] as num).toInt(),
-  goalIds:
-      (json['goalIds'] as List<dynamic>)
-          .map((e) => (e as num).toInt())
-          .toList(),
-  typeIds:
-      (json['typeIds'] as List<dynamic>)
-          .map((e) => (e as num).toInt())
-          .toList(),
-  modalityIds:
-      (json['modalityIds'] as List<dynamic>)
-          .map((e) => (e as num).toInt())
-          .toList(),
-  hashtagIds:
-      (json['hashtagIds'] as List<dynamic>)
-          .map((e) => (e as num).toInt())
-          .toList(),
+  goalIds: (json['goalIds'] as List<dynamic>)
+      .map((e) => (e as num).toInt())
+      .toList(),
+  typeIds: (json['typeIds'] as List<dynamic>)
+      .map((e) => (e as num).toInt())
+      .toList(),
+  modalityIds: (json['modalityIds'] as List<dynamic>)
+      .map((e) => (e as num).toInt())
+      .toList(),
+  hashtagIds: (json['hashtagIds'] as List<dynamic>)
+      .map((e) => (e as num).toInt())
+      .toList(),
 );
 
 Map<String, dynamic> _$WorkoutModelToJson(WorkoutModel instance) =>

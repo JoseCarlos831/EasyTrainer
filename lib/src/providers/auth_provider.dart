@@ -138,4 +138,6 @@ class AuthProvider with ChangeNotifier {
     _userData = updatedData;
     Future.microtask(() => notifyListeners());
   }
+
+  setToken(String s) {}
 }

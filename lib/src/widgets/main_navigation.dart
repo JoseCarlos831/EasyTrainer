@@ -1,3 +1,4 @@
+
 // lib/src/widgets/main_navigation.dart
 
 import 'package:flutter/material.dart';
@@ -9,7 +10,9 @@ import '../screens/private/analytics_page.dart';
 import '../screens/private/profile_page.dart';
 
 class MainNavigation extends StatefulWidget {
-  const MainNavigation({super.key});
+  final List<Widget>? pages;
+
+  const MainNavigation({super.key,this.pages});
 
   @override
   State<MainNavigation> createState() => _MainNavigationState();
@@ -18,11 +21,12 @@ class MainNavigation extends StatefulWidget {
 class _MainNavigationState extends State<MainNavigation> {
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = const [
-    HomePage(key: PageStorageKey('home')),
-    AnalyticsPage(key: PageStorageKey('analytics')),
-    ProfileScreen(key: PageStorageKey('profile')),
-  ];
+   late final List<Widget> _pages = widget.pages ??
+      const [
+        HomePage(key: PageStorageKey('home')),
+        AnalyticsPage(key: PageStorageKey('analytics')),
+        ProfileScreen(key: PageStorageKey('profile')),
+      ];
 
   @override
   Widget build(BuildContext context) {

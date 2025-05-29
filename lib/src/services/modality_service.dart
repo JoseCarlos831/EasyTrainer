@@ -1,5 +1,3 @@
-// lib/src/services/modality_service.dart
-
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -7,14 +5,21 @@ import '../config/env.dart';
 import '../models/modality_model.dart';
 
 class ModalityService {
-  final String _baseUrl = Env.apiBaseUrl;
+  final String _baseUrl;
+  final http.Client httpClient;
+
+  ModalityService({
+    http.Client? httpClient,
+    String? baseUrl,
+  })  : httpClient = httpClient ?? http.Client(),
+        _baseUrl = baseUrl ?? Env.apiBaseUrl;
 
   Future<List<ModalityModel>> fetchModalities(String token) async {
     final url = Uri.parse('$_baseUrl/Modality');
     print('[ModalityService] Fetching modalities from $url');
 
     try {
-      final response = await http.get(
+      final response = await httpClient.get(
         url,
         headers: {
           'Content-Type': 'application/json',
@@ -42,7 +47,7 @@ class ModalityService {
     print('[ModalityService] Fetching modality ID $id from $url');
 
     try {
-      final response = await http.get(
+      final response = await httpClient.get(
         url,
         headers: {
           'Content-Type': 'application/json',

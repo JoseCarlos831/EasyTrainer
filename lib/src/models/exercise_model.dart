@@ -66,8 +66,22 @@ class ExerciseModel {
     required this.variationIds,
   });
 
-  factory ExerciseModel.fromJson(Map<String, dynamic> json) =>
-      _$ExerciseModelFromJson(json);
+ factory ExerciseModel.fromJson(Map<String, dynamic> json) {
+  return ExerciseModel(
+    id: json['id'] ?? 0,
+    name: json['name']?.toString() ?? '',
+    description: json['description']?.toString(),
+    duration: json['duration'] != null ? Duration(seconds: json['duration']) : null,
+    instructorId: json['instructorId'] ?? 0,
+    levelId: json['levelId'] ?? 0,
+    goalIds: List<int>.from(json['goalIds'] ?? []),
+    typeIds: List<int>.from(json['typeIds'] ?? []),
+    modalityIds: List<int>.from(json['modalityIds'] ?? []),
+    hashtagIds: List<int>.from(json['hashtagIds'] ?? []),
+    variationIds: List<int>.from(json['variationIds'] ?? []),
+  );
+}
+
 
   Map<String, dynamic> toJson() => _$ExerciseModelToJson(this);
 

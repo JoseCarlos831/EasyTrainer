@@ -17,14 +17,12 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
   height: (json['height'] as num).toDouble(),
   gender: json['gender'] as String,
   levelId: (json['levelId'] as num).toInt(),
-  goalIds:
-      (json['goalIds'] as List<dynamic>)
-          .map((e) => (e as num).toInt())
-          .toList(),
-  instructorIds:
-      (json['instructorIds'] as List<dynamic>)
-          .map((e) => (e as num).toInt())
-          .toList(),
+  goalIds: (json['goalIds'] as List<dynamic>)
+      .map((e) => (e as num).toInt())
+      .toList(),
+  instructorIds: (json['instructorIds'] as List<dynamic>)
+      .map((e) => (e as num).toInt())
+      .toList(),
 );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{

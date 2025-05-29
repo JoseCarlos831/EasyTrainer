@@ -1,5 +1,3 @@
-// lib/src/services/user_service.dart
-
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -7,17 +5,21 @@ import '../models/user_model.dart';
 import '../config/env.dart';
 
 class UserService {
-  final String _baseUrl = Env.apiBaseUrl;
+  final String _baseUrl;
+  final http.Client httpClient;
+
+  UserService({
+    http.Client? httpClient,
+    String? baseUrl,
+  })  : httpClient = httpClient ?? http.Client(),
+        _baseUrl = baseUrl ?? Env.apiBaseUrl;
 
   Future<bool> updateUser(UserModel user, String token) async {
     try {
       final url = Uri.parse('$_baseUrl/user/${user.id}');
       final body = jsonEncode(user.toJson());
 
-      print('[DEBUG] Fazendo PUT para: $url');
-      print('[DEBUG] Body: $body');
-
-      final response = await http.put(
+      final response = await httpClient.put(
         url,
         headers: {
           'Content-Type': 'application/json',
@@ -26,12 +28,9 @@ class UserService {
         body: body,
       );
 
-      print('[DEBUG] Status: ${response.statusCode}');
-      print('[DEBUG] Body: ${response.body}');
-
       return response.statusCode == 200;
     } catch (e) {
-      print('[ERROR] Exceção em UserService.updateUser: $e');
+      print('[ERROR] updateUser: $e');
       return false;
     }
   }
@@ -42,10 +41,10 @@ class UserService {
     required String newPassword,
     required String token,
   }) async {
-    final url = Uri.parse('${Env.apiBaseUrl}/user/$userId/password');
+    final url = Uri.parse('$_baseUrl/user/$userId/password');
 
     try {
-      final response = await http.put(
+      final response = await httpClient.put(
         url,
         headers: {
           'Content-Type': 'application/json',
@@ -57,22 +56,18 @@ class UserService {
         }),
       );
 
-      print('[DEBUG] changePassword status: ${response.statusCode}');
-      print('[DEBUG] changePassword body: ${response.body}');
-
       return response.statusCode == 200;
     } catch (e) {
-      print('[ERROR] Failed to change password: $e');
+      print('[ERROR] changePassword: $e');
       return false;
     }
   }
 
   Future<bool> deleteAccount(int userId, String token) async {
     final url = Uri.parse('$_baseUrl/user/$userId');
-    print('[UserService] DELETE $url');
 
     try {
-      final response = await http.delete(
+      final response = await httpClient.delete(
         url,
         headers: {
           'Content-Type': 'application/json',
@@ -80,11 +75,9 @@ class UserService {
         },
       );
 
-      print('[UserService] Status: ${response.statusCode}');
-      print('[UserService] Body: ${response.body}');
       return response.statusCode == 200;
     } catch (e) {
-      print('[UserService] Erro ao deletar conta: $e');
+      print('[ERROR] deleteAccount: $e');
       return false;
     }
   }

@@ -1,3 +1,5 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
 part of 'routine_has_exercise_model.dart';
 
 // **************************************************************************
