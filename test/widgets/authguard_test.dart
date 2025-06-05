@@ -34,8 +34,8 @@ void main() {
         value: mockAuth,
         child: const MaterialApp(
           home: AuthGuard(
-            child: Text('Área Protegida'),
             fallback: FakeLoginPage(),
+            child: Text('Área Protegida'),
           ),
         ),
       ),
@@ -53,8 +53,8 @@ void main() {
         value: mockAuth,
         child: const MaterialApp(
           home: AuthGuard(
-            child: Text('Área Protegida'),
             fallback: FakeLoginPage(),
+            child: Text('Área Protegida'),
           ),
         ),
       ),

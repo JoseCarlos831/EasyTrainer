@@ -153,7 +153,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                       onTap: _resendCode,
                       child: Text.rich(
                         TextSpan(
-                          text: local.verifyEmailPage_resendPrompt + " ",
+                          text: "${local.verifyEmailPage_resendPrompt} ",
                           style: const TextStyle(color: Colors.white70),
                           children: [
                             TextSpan(

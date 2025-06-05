@@ -60,7 +60,7 @@ void main() {
         ),
       ),
     );
-; // inicial
+// inicial
     await tester.pumpAndSettle(const Duration(milliseconds: 100)); // renderização completa
 
     expect(find.byType(WorkoutSection), findsOneWidget);

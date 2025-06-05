@@ -65,7 +65,7 @@ void main() {
       )).thenAnswer((_) async => http.Response('', 200));
 
       final result = await userService.changePassword(
-        userId: user.id!,
+        userId: user.id,
         currentPassword: '123456',
         newPassword: 'abcdef',
         token: token,
@@ -82,7 +82,7 @@ void main() {
         headers: anyNamed('headers'),
       )).thenAnswer((_) async => http.Response('', 200));
 
-      final result = await userService.deleteAccount(user.id!, token);
+      final result = await userService.deleteAccount(user.id, token);
       expect(result, isTrue);
     });
   });
